@@ -167,44 +167,21 @@ export default function ResultScreen({ segment, guests, packageId, selected, onB
             </p>
           </Reveal>
 
-          <Reveal delay={0.2} className="print:hidden">
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
-              <Btn
-                onClick={async () => {
-                  try { await salvarComanda(); } catch (e) { console.warn("Falha ao salvar comanda", e); }
-                  window.open(waLink(msg), "_blank");
-                }}
-                icon={<MessageCircle className="h-4 w-4" />}>
-                Enviar comanda no WhatsApp
-              </Btn>
-              <Btn href={CONTACT.instagram} variant="line" arrow={false} icon={<IgIcon size={16} />}>
-                {CONTACT.handle}
-              </Btn>
-            </div>
-            <div className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-4">
-              <Btn onClick={async () => {
-                const msg = buildProposalMessage({
-                  segment: segment,
-                  guests,
-                  packageId,
-                  selectedDrinks: drinks,
-                  perPerson,
-                  totalEvent,
-                  number,
-                  date,
-                });
-                window.open(waLink(msg), "_blank");
-              }}
-                variant="primary"
-                className="w-full mb-4">
-                Finalizar orçamento pelo Whatsapp
-              </Btn>
-              <TextLink onClick={onBack} back>
-                Ajustar carta
-              </TextLink>
-              <TextLink onClick={async () => { try { await salvarComanda(); } catch (e) { console.warn("Falha ao salvar comanda", e); } window.print(); }}>Imprimir comanda</TextLink>
-              <TextLink onClick={onRestart}>Nova simulação</TextLink>
-            </div>
+          <Reveal>
+              <div className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-4">
+                <Btn
+                  onClick={async () => {
+                    try { await salvarComanda(); } catch (e) { console.warn("Falha ao salvar comanda", e); }
+                    window.open(waLink(msg), "_blank");
+                  }}
+                  icon={<MessageCircle className="h-4 w-4" />
+                >
+                  Enviar comanda no WhatsApp
+                </Btn>
+                <Btn href={CONTACT.instagram} variant="line" arrow={false} icon={<IgIcon size={16} }>
+                  {CONTACT.handle}
+                </Btn>
+              </div>
           </Reveal>
         </div>
 
