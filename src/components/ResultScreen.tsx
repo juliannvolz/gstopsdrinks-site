@@ -5,6 +5,7 @@ import { AnimatedMoney, Btn, EASE, IgIcon, Label, Reveal, TextLink } from "./ui"
 import { useTheme } from "../theme";
 import { generateComandaPDF, generateSimplePDF } from "../utils/pdf";
 import { saveComanda } from "../lib/supabase";
+import { sendComandaToSheets } from "../lib/googleSheets";
 import {
   CONTACT,
   PACKAGES,
@@ -169,6 +170,24 @@ export default function ResultScreen({ segment, guests, packageId, selected, onB
                 <Btn
                   onClick={async () => {
                     try { await salvarComanda(); } catch (e) { console.warn("Falha ao salvar comanda", e); }
+
+                    // Envia para Google Sheets (assíncrono, não bloqueia WhatsApp)
+                    try {
+                      await sendComandaToSheets({
+                        nome: leadNome || '',
+                        telefone: leadTelefone,
+                        segmento: seg.name,
+                        convidados: guests.estimate,
+                        pacote: pkg.name,
+                        drinks: drinksNomes,
+                        valorPorPessoa: perPerson,
+                        valorTotal: totalEvent,
+                        comandaId: number,
+                      });
+                    } catch (e) {
+                      console.warn('[GoogleSheets] Erro não bloqueante:', e);
+                    }
+
                     window.open(waLink(msg), "_blank");
                   }}
                   icon={<MessageCircle className="h-4 w-4" />}
