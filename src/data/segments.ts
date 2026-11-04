@@ -89,9 +89,9 @@ export const SEGMENTS: Record<SegmentId, Segment> = {
     ],
     image: "/gs/images/segments/segment-aniversario.jpg",
     gallery: [
-      "/gs/images/gallery/segment-aniversario.jpg",
       "/gs/images/gallery/caipirinha-maracuja-limao.jpg",
       "/gs/images/gallery/coquetel-tropical.jpg",
+      "/gs/images/drinks/drink-laranja-alecrim.jpg",
     ],
     theme: {
       mode: "dark",
@@ -122,9 +122,9 @@ export const SEGMENTS: Record<SegmentId, Segment> = {
     ],
     image: "/gs/images/segments/hero-main.jpg",
     gallery: [
-      "/gs/images/gallery/lineup.jpg",
       "/gs/images/gallery/coquetel-colorido.jpg",
       "/gs/images/gallery/caipirinha-morango.jpg",
+      "/gs/images/gallery/moscow-mule.jpg",
     ],
     theme: {
       mode: "dark",
@@ -155,9 +155,9 @@ export const SEGMENTS: Record<SegmentId, Segment> = {
     ],
     image: "/gs/images/segments/segment-corporativo.jpg",
     gallery: [
-      "/gs/images/gallery/segment-corporativo.jpg",
       "/gs/images/gallery/coquetel-martini-limao.jpg",
       "/gs/images/gallery/moscow-mule.jpg",
+      "/gs/images/gallery/coquetel-colorido.jpg",
     ],
     theme: {
       mode: "dark",
@@ -189,7 +189,7 @@ export const SEGMENTS: Record<SegmentId, Segment> = {
     ],
     image: "/gs/images/segments/segment-aniversario.jpg",
     gallery: [
-      "/gs/images/gallery/segment-aniversario.jpg",
+      "/gs/images/gallery/coquetel-colorido.jpg",
       "/gs/images/gallery/caipirinha-maracuja-limao.jpg",
       "/gs/images/gallery/coquetel-tropical.jpg",
     ],
@@ -222,9 +222,9 @@ export const SEGMENTS: Record<SegmentId, Segment> = {
     ],
     image: "/gs/images/segments/lineup.jpg",
     gallery: [
-      "/gs/images/gallery/lineup.jpg",
-      "/gs/images/gallery/hero-main.jpg",
-      "/gs/images/gallery/wedding.jpg",
+      "/gs/images/gallery/coquetel-colorido.jpg",
+      "/gs/images/gallery/caipirinha-morango.jpg",
+      "/gs/images/gallery/moscow-mule.jpg",
     ],
     theme: {
       mode: "light",

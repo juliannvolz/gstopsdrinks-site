@@ -262,9 +262,9 @@ function Corporate({ segment, onNext, onBack }: Props) {
             transition={{ duration: 0.8, delay: 0.3, ease: EASE }}
             className="flex items-center gap-5 border border-fg/15 bg-bg2 p-5"
           >
-            <img src="gs/gilmar-1.jpg" alt="Gilmar Steffen" className="h-28 w-24 shrink-0 object-cover object-top" />
+            <img src="/gs/images/team/gilmar-1.jpg" alt="Gilmar Steffen" className="h-28 w-24 shrink-0 object-cover object-top rounded-lg" />
             <div>
-              <p className="font-display text-[1.35rem] italic leading-snug">“Profissionalismo e excelência para a sua marca.”</p>
+              <p className="font-display text-[1.35rem] italic leading-snug">"Profissionalismo e excelência para a sua marca."</p>
               <p className="mt-3 font-mono text-[12px] uppercase tracking-[0.14em] text-fg/55">Gilmar Steffen · GS Top Drinks</p>
             </div>
           </motion.div>
