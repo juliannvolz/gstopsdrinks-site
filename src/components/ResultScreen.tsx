@@ -138,11 +138,8 @@ export default function ResultScreen({ segment, guests, packageId, selected, onB
                 value={perPerson}
                 className="gs-offset mt-4 block font-sans text-[clamp(3.4rem,8.5vw,6.6rem)] font-extrabold leading-[0.9] tracking-[-0.045em] tabular-nums"
               />
-              <p
-                className="mt-6 inline-flex items-center border px-3 py-1.5 text-[12px] font-semibold uppercase tracking-[0.14em]"
-                style={over ? { color: WARN, borderColor: `${WARN}80` } : { color: "var(--acc)", borderColor: "var(--acc)" }}
-              >
-                {over ? "Acima do teto do plano" : `Dentro do plano ${pkg.name}`}
+              <p className="mt-6 inline-flex items-center border px-3 py-1.5 text-[12px] font-semibold uppercase tracking-[0.14em]" style={{ color: "var(--acc)", borderColor: "var(--acc)" }}>
+                Plano {pkg.name}
               </p>
             </div>
           </Reveal>
@@ -237,7 +234,10 @@ export default function ResultScreen({ segment, guests, packageId, selected, onB
                   background: `repeating-linear-gradient(90deg, ${INK} 0 2px, transparent 2px 4px, ${INK} 4px 5px, transparent 5px 8px, ${INK} 8px 11px, transparent 11px 12px)`,
                 }}
               />
-              <p className="mt-4 text-center text-[13px]">obrigado pela preferência!</p>
+              <p className="mt-4 text-center text-[11px] leading-relaxed opacity-70">
+                <strong>Importante:</strong> Os valores acima são uma <strong>simulação aproximada</strong>. O investimento final é <strong>personalizado com o consultor</strong> no WhatsApp — entre em contato para fechar seu orçamento real e garantir a melhor proposta.
+              </p>
+              <p className="mt-2 text-center text-[13px]">obrigado pela preferência!</p>
               <p className="text-center text-[13px] opacity-60">{CONTACT.handle} · gstopdrinks.com.br</p>
             </div>
           </motion.div>

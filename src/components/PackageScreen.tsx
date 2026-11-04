@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Btn, EASE, Label, Reveal, TextLink } from "./ui";
-import { CitrusWheel, Stamp } from "./brand";
+import { CitrusWheel } from "./brand";
 import { PACKAGE_ORDER, PACKAGES, SEGMENTS, fmt, type PackageId, type SegmentId } from "../data/catalog";
 
 interface Props {
@@ -60,13 +60,6 @@ export default function PackageScreen({ segment, recommended, onSelect, onBack }
                   </span>
                 )}
               </div>
-              {hero && (
-                <div className="absolute -right-3 -top-12 z-10">
-                  <Stamp text="mais vendido • Ouro • " size={104} className="rotate-12 text-acc">
-                    <CitrusWheel size={34} />
-                  </Stamp>
-                </div>
-              )}
               <div className="flex flex-1 flex-col p-7">
                 <p className="font-mono text-[13px] uppercase tracking-[0.14em] text-fg/55">{p.tagline}</p>
                 <h3 className="mt-2 font-display text-[2.6rem] leading-none">{p.name}</h3>

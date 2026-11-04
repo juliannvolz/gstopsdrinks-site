@@ -49,7 +49,7 @@ export default function DrinksScreen({ segment, packageId, selected, onChange, o
 
   const total = totalPerPerson(pkg, selected);
   const over = total > pkg.ceiling + 0.001;
-  const ready = selected.length >= MIN_DRINKS;
+  const ready = true; // permite prosseguir sem drinks mínimos
   const cur = useMemo(() => buildCuradoria(pkg, selected), [pkg, selected]);
   const sig = [...selected].sort().join("|");
   const showSuggestion = !autoNote && (cur.over || cur.mixed) && cur.suggestions.length > 0 && dismissed !== sig;
@@ -104,7 +104,7 @@ export default function DrinksScreen({ segment, packageId, selected, onChange, o
         </div>
         <Reveal delay={0.1} className="md:col-span-4">
           <p className="max-w-sm text-[15px] leading-relaxed text-fg/60 md:ml-auto">
-            Escolha de {MIN_DRINKS} a {MAX_DRINKS} drinks. Cada escolha soma ao valor por pessoa — o cálculo é automático.
+            Escolha até {MAX_DRINKS} drinks. Cada escolha soma ao valor por pessoa — o cálculo é automático.
           </p>
         </Reveal>
       </div>
@@ -213,8 +213,8 @@ export default function DrinksScreen({ segment, packageId, selected, onChange, o
         <aside className="hidden lg:col-span-4 lg:block">
           <div className="sticky top-24">
             <Summary pkg={pkg} selected={selected} total={total} over={over} auto={auto} onAuto={setAutoMode} />
-            <Btn onClick={onNext} disabled={!ready} full className="mt-6">
-              {ready ? "Ver minha comanda" : `Escolha mais ${MIN_DRINKS - selected.length}`}
+            <Btn onClick={onNext} disabled={false} full className="mt-6">
+              Ver minha comanda
             </Btn>
           </div>
         </aside>
@@ -231,17 +231,14 @@ export default function DrinksScreen({ segment, packageId, selected, onChange, o
             <HurricaneGlass level={total / pkg.ceiling} className="h-12 w-auto shrink-0 text-fg/60" />
             <div className="min-w-0 flex-1">
               <p className={`font-mono text-[12px] uppercase tracking-[0.12em] ${over ? WARN : "text-fg/55"}`}>
-                {over ? "Acima do teto" : ready ? "Por pessoa" : `Faltam ${MIN_DRINKS - selected.length}`}
+                {over ? "Acima do teto" : "Por pessoa"}
               </p>
               <AnimatedMoney value={total} className="block font-sans text-2xl font-extrabold tracking-[-0.03em] tabular-nums" />
             </div>
             <button
               type="button"
-              disabled={!ready}
               onClick={onNext}
-              className={`flex items-center gap-2 px-5 py-3.5 text-[12px] font-semibold uppercase tracking-[0.14em] ${
-                ready ? "bg-acc text-onacc shadow-[-3px_3px_0_0_var(--acc2)]" : "bg-fg/10 text-fg/35"
-              }`}
+              className="flex items-center gap-2 px-5 py-3.5 text-[12px] font-semibold uppercase tracking-[0.14em] bg-acc text-onacc shadow-[-3px_3px_0_0_var(--acc2)]"
             >
               Comanda <MoveRight className="h-4 w-4" />
             </button>

@@ -25,6 +25,8 @@ const HOW: [string, string][] = [
   ["Monte a sua carta", "Selecione os drinks e veja o valor por pessoa ser calculado na hora."],
 ];
 
+const OBS_VALORES = "Os valores exibidos são <strong>estimativas aproximadas</strong> baseadas em médias. O orçamento real é <strong>personalizado com nosso consultor no WhatsApp</strong> — o simulador serve como referência, o fechamento acontece na conversa direta.";
+
 function safeSelect(ctx: gsap.Context, selector: string): Element[] {
   if (!ctx.selector) return [];
   const selectorFn = ctx.selector(selector);
@@ -175,6 +177,7 @@ export default function IntroScreen({ onStart }: { onStart: () => void }) {
             </li>
           ))}
         </ol>
+        <p className="mt-10 text-center text-[14px] leading-relaxed text-fg/60" dangerouslySetInnerHTML={{ __html: OBS_VALORES }} />
       </section>
 
       <section className="gs-gilmar-section bg-bg2">
