@@ -350,8 +350,8 @@ function Summary({
               compact ? "text-4xl" : "text-[2.9rem]"
             }`}
           />
-          <p className={`mt-3 text-[13px] font-medium ${over ? WARN : "text-fg/55"}`}>
-            {over ? "O copo transbordou: acima do teto" : `${selected.length} de ${MAX_DRINKS} drinks · dentro do plano`}
+          <p className="mt-3 text-[13px] font-medium text-fg/55">
+            {selected.length > 0 ? `${selected.length} drink${selected.length > 1 ? "s" : ""} selecionado${selected.length > 1 ? "s" : ""}` : `Você pode adicionar até ${MAX_DRINKS} drinks`}
           </p>
         </div>
       </div>
@@ -359,7 +359,6 @@ function Summary({
         <div className="mt-6 space-y-2.5 border-t border-fg/12 pt-5 text-[14px] text-fg/75">
           <Leader left="Estrutura & equipe" right={fmt.format(pkg.base)} />
           <Leader left={`Drinks escolhidos (${selected.length})`} right={fmt.format(drinkSum(pkg, selected))} />
-          <Leader left="Teto do plano" right={fmt.format(pkg.ceiling)} />
         </div>
       )}
       <button

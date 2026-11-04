@@ -62,7 +62,7 @@ const d = (
 export const PACKAGES: Record<PackageId, Package> = {
   bronze: {
     id: "bronze",
-    name: "Bronze 🥉",
+    name: "Bronze",
     tagline: "Entry level — Caipirinhas clássicas e refrescos",
     base: 45,
     ceiling: 60,
@@ -89,7 +89,7 @@ export const PACKAGES: Record<PackageId, Package> = {
   },
   prata: {
     id: "prata",
-    name: "Prata 🥈",
+    name: "Prata",
     tagline: "Coquetéis autorais + clássicos refinados",
     base: 65,
     ceiling: 85,
@@ -116,7 +116,7 @@ export const PACKAGES: Record<PackageId, Package> = {
   },
   ouro: {
     id: "ouro",
-    name: "Ouro 🥇",
+    name: "Ouro",
     tagline: "Experiência premium — destilados finos e assinaturas exclusivas",
     base: 95,
     ceiling: 120,

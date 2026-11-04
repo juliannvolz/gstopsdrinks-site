@@ -16,7 +16,7 @@ import {
   GUEST_OPTIONS,
   PACKAGES,
   SEGMENTS,
-  seedSelection,
+  totalPerPerson,
   waLink,
   type PackageId,
   type SegmentId,
@@ -141,7 +141,7 @@ export default function App() {
 
   const goPackage = (p: PackageId) => {
     setPackageId(p);
-    setSelected(seedSelection(PACKAGES[p]));
+    setSelected([]); // inicia sem drinks pré-selecionados
     setLeadNome("");
     setLeadTelefone("");
     AnalyticsEvents.packageSelect(p, segment ?? "unknown");
@@ -316,6 +316,3 @@ export default function App() {
     </ThemeCtx.Provider>
   );
 }
-
-// Import totalPerPerson for analytics
-import { totalPerPerson } from "./data/catalog";
