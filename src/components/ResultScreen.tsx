@@ -48,7 +48,7 @@ const Rule = ({ double = false }: { double?: boolean }) => (
   <div className={`my-4 ${double ? "border-t-[3px] border-double" : "border-t border-dashed"}`} style={{ borderColor: `${INK}59` }} />
 );
 
-export default function ResultScreen({ segment, guests, packageId, selected, onBack, onRestart }: Props) {
+export default function ResultScreen({ segment, guests, packageId, selected, leadNome, leadTelefone, onBack, onRestart }: Props) {
   const theme = useTheme();
   const pkg = PACKAGES[packageId];
   const seg = SEGMENTS[segment];
