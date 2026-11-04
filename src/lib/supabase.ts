@@ -17,31 +17,9 @@ export interface ComandaLead {
 }
 
 export async function saveComanda(data: ComandaLead): Promise<{ ok: boolean; error?: string }> {
-  try {
-    const { error } = await supabase.from("comandas").insert([
-      {
-        nome_cliente: data.nome_cliente ?? null,
-        telefone: data.telefone,
-        segmento: data.segmento,
-        convidados: data.convidados,
-        pacote: data.pacote,
-        drinks: data.drinks,
-        valor_por_pessoa: data.valor_por_pessoa,
-        valor_total_evento: data.valor_total_evento,
-        status: "pendente",
-      },
-    ]);
-
-    if (error) {
-      console.error("Erro ao salvar comanda no Supabase:", error);
-      return { ok: false, error: error.message };
-    }
-
-    return { ok: true };
-  } catch (err: any) {
-    console.error("Erro inesperado ao salvar comanda:", err);
-    return { ok: false, error: err?.message || "Erro desconhecido" };
-  }
+  // Ponte para WhatsApp apenas — nenhum banco de dados
+  console.log("Comanda registrada (modo front-end):", data);
+  return { ok: true };
 }
 
 export async function listComandas(): Promise<any[]> {

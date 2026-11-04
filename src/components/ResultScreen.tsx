@@ -174,13 +174,13 @@ export default function ResultScreen({ segment, guests, packageId, selected, onB
                     try { await salvarComanda(); } catch (e) { console.warn("Falha ao salvar comanda", e); }
                     window.open(waLink(msg), "_blank");
                   }}
-                  icon={<MessageCircle className="h-4 w-4" />
+                  icon={<MessageCircle className="h-4 w-4" />}
                 >
                   Enviar comanda no WhatsApp
                 </Btn>
-                <Btn href={CONTACT.instagram} variant="line" arrow={false} icon={<IgIcon size={16} }>
-                  {CONTACT.handle}
-                </Btn>
+                <Btn href={CONTACT.instagram} variant="line" arrow={false} icon={<IgIcon size={16} />}>
+{CONTACT.handle}
+</Btn>
               </div>
           </Reveal>
         </div>
