@@ -13,7 +13,6 @@ interface Props {
 const ESSENTIALS = [
   { id: "welcome", label: "Welcome drink na chegada", desc: "Servido à francesa para receber os convidados", icon: "🍾" },
   { id: "shot", label: "Brinde especial (shot)", desc: "Momento sincronizado para todos brindarem juntos", icon: "🥃" },
-  { id: "show", label: "Show dos Tequileiros", desc: "Performance com fogo e garrafas — a atração da noite", icon: "🔥" },
   { id: "mocktail", label: "Mocktails premium", desc: "Opções sem álcool no mesmo nível dos drinks", icon: "🍹" },
   { id: "personalizado", label: "Drink personalizado", desc: "Coquetel autoral com nome do evento/do casal", icon: "✨" },
   { id: "carta", label: "Carta impressa personalizada", desc: "Menu alinhado à identidade visual do evento", icon: "📋" },
