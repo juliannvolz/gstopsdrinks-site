@@ -48,7 +48,7 @@ export default function EssentialsScreen({ selected, onChange, onNext, onBack }:
         </Reveal>
       </div>
 
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]">
         {ESSENTIALS.map((item, i) => {
           const active = selected.includes(item.id);
           return (
