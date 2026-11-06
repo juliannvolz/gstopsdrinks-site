@@ -1,0 +1,62 @@
+ALTERAÇÕES SITE GSTOPDRINKS
+repo no GitHub juliannvolz -> gstopsdrinks-site
+
+AUDIOS DO MEU SOCIO COM O NOSSO CLIENTE SOBRE O SITE:
+-ROCHA (SOCIO): " Seguinte eu estava conversando ele com Gilmar agora e ele trouxe um ponto que a gente não tinha percebido que o site ficou um pouco complexo demais para o público então qual que foi AA ideia que ele trouxe para a gente ao invés do cliente poder selecionar os drinks ali no site ele seleciona apenas o plano E aí cada plano já aparece ali Quais drinks serão servidos e aí caso ele queira personalizar a enche disponibiliza essa opção através do consultor ali No No WhatsApp na ligação Então tirar essa parte do do cliente e selecionar os drinks para não deixar tão complexo
+
+
+- GILMAR (CLIENTE): " Uma coisa importante É a gente fazer digamos assim O pacote ouro primeiro prata e bronze e não de bronze prata e ouro porque o que acontece ? A gente não sabe A gente não pode medir o bolso do cliente né Então a gente bota o pacote é que nem você ir comprar um carro não é ? Você vai comprar alguém chega para comprar um carro e primeiro você oferece 11 Ferrari como tinha conversado com o Eduardo e aí se o cliente dizer assim não mas é muito bom a coisa e tal mas o meu orçamento não chega para comprar uma Ferrari então eu vou comprar sei lá Um BMW Mas aí ele diga assim não mas eu ainda também não tenho um orçamento com uma BMW Então vamos comprar um outro que também vai favorecer ele porque se a gente levar por esse lado de a gente começar pelo mais baixo para daí aumentar OA gente está acaba digamos assim que é medindo o bolso do do cliente sem saber Sem saber como é que ele é Muitas vezes eles pedem já diretamente pelo pelo nome dos drinks então aí no caso eu já sei que não adianta eu mandar o pacote básico por exemplo quando eu mando em PDF sabe Ah quando o cliente pede Ah eu quero uma pero eu quero negro onde coisa da UPA espera aí então daí nesse caso eu já sei que é um cliente De poder aquisitivo de uma classe que ele sabe o que que ele não é degustar uma bebida mas quando ele pede aquilo lá eu quero uma coisa simplesinha OK ? Daí eu já mando pacote bronze então eu penso que a gente tem que começar a botar o pacote a ouro primeiro Uma primeira opção o pacote ouro aí o pacote prata e o pacote bronze por mais para o final do caso
+
+Ai, ele mandou por whatsapp os drinks de cada pacote com as fotos, as fotos creio que maioria já está na pasta, mas vou mantar atualizado vindo dele as bebidas para mostrar de cada pacote.
+
+Pacote Ouro 🥇
+Caipirinha de Morango 🍓, Vodka, Cachaça, Água com gás, Açúcar opcional
+
+Caipirinha de Maracujá, Cachaça, Vodka, Água com gás, Açúcar
+
+Aperol Spritz, Aperol, Água com gás, Espumante Pro seco, meia fatia de laranja 🍊
+
+Whisky Sour, Suco de limão 🍋, Xarope de Açúcar, espuma
+
+Negroni, Gin, Campari, Wermouth
+
+Caipirinha de Maracujá, Cachaça, Vodka, Água com gás, Açúcar
+
+Moscow mule, Xarope de Gengibre ginger:, Água com gás, Suco de limão 🍋, Vodka opcional, Espuma chantilly, Raspa de limão 🍋
+
+
+
+Pacote Prata 🥈
+Sex on the Beach, Xarope de Grenadine, Néctar de Laranja 🍊, Xarope de Pêssego 🍑, Vodka opcional
+
+Cosmopolitan, Xarope de Crambrry, Néctar de Crambrry, Licor de 🍊, Vodka opcional
+
+Mojito, Bacardi carta Blanca opcional, Água com gás, Suco de limão 🍋, Açúcar opcional, Folhas de Hortelã
+
+Pinã Colada, Néctar de Abacaxi 🍍, Leite condensado, Leite de côco, Vodka opcional
+
+Caipirinha de Morango 🍓, Vodka, Cachaça, Água com gás, Açúcar opcional
+
+Caipirinha de Maracujá, Cachaça, Vodka, Água com gás, Açúcar
+
+Caipirinha de Maracujá, Cachaça, Vodka, Água com gás, Açúcar
+
+Moscow mule, Xarope de Gengibre ginger:, Água com gás, Suco de limão 🍋, Vodka opcional, Espuma chantilly, Raspa de limão 🍋
+
+
+Pacote Bronze 🥉
+Lagoa Azul, Soda, Suco de Limão 🍋, Xarope de Curaçau Blue, Vodka opcional
+
+Soda Italiana, Água com gás, Xarope de Maçã Verde, Vodka opcional
+
+Batida Sensação, Néctar de Morango 🍓, Leite condensado, Xarope de Morango 🍓, Vodka opcional
+
+Batida dos Deuses, Néctar de Abacaxi 🍍, Néctar de Laranja 🍊, Leite condensado, Vodka opcional
+
+Paradise, Néctar de Laranja 🍊, Xarope de Grenadine, Xarope de Curaçau Blue e Vodka
+
+
+
+a maioria das imagens estão na pasta do projeto, no local e na pasta especifica das imagens do site nomeadas 
+
+preciso alterar isso e somente isso listado acima, sem danificar a hospedagem ou servidor de funcionamento do site, só preciso atualizar e ele continue online

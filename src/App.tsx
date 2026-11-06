@@ -7,7 +7,6 @@ import QuizScreen from "./components/QuizScreen";
 import EssentialsScreen from "./components/quiz/EssentialsScreen";
 import SegmentScreen from "./components/SegmentScreen";
 import PackageScreen from "./components/PackageScreen";
-import DrinksScreen from "./components/DrinksScreen";
 import LeadCaptureScreen from "./components/LeadCaptureScreen";
 import ResultScreen from "./components/ResultScreen";
 import {
@@ -16,7 +15,6 @@ import {
   GUEST_OPTIONS,
   PACKAGES,
   SEGMENTS,
-  totalPerPerson,
   waLink,
   type PackageId,
   type SegmentId,
@@ -24,7 +22,7 @@ import {
 import { ThemeCtx } from "./theme";
 import { initGA, AnalyticsEvents } from "./utils/analytics";
 
-type Step = "intro" | "q0" | "q1" | "q2" | "q3" | "segment" | "package" | "drinks" | "lead" | "result";
+type Step = "intro" | "q0" | "q1" | "q2" | "q3" | "segment" | "package" | "lead" | "result";
 
 const STEP_INDEX: Record<Step, number> = {
   intro: -1,
@@ -34,11 +32,10 @@ const STEP_INDEX: Record<Step, number> = {
   q3: 3,
   segment: 4,
   package: 5,
-  drinks: 6,
-  lead: 7,
-  result: 8,
+  lead: 6,
+  result: 7,
 };
-const STEP_NAMES = ["Momento", "Convidados", "Estilo", "Essenciais", "Destino", "Pacote", "Carta", "Contato", "Comanda"];
+const STEP_NAMES = ["Momento", "Convidados", "Estilo", "Essenciais", "Destino", "Pacote", "Contato", "Comanda"];
 
 const screen = {
   initial: { opacity: 0, y: 24 },
@@ -93,7 +90,7 @@ export default function App() {
       q3: { name: "essenciais", num: 4 },
       segment: { name: "destino", num: 5 },
       package: { name: "pacote", num: 6 },
-      drinks: { name: "carta", num: 7 },
+      lead: { name: "contato", num: 7 },
       result: { name: "comanda", num: 8 },
       intro: { name: "intro", num: 0 },
     };
@@ -141,26 +138,12 @@ export default function App() {
 
   const goPackage = (p: PackageId) => {
     setPackageId(p);
-    setSelected([]); // inicia sem drinks pré-selecionados
+    // Pré-selecionar TODOS os drinks do pacote escolhido
+    setSelected(PACKAGES[p].drinks.map((d) => d.id));
     setLeadNome("");
     setLeadTelefone("");
     AnalyticsEvents.packageSelect(p, segment ?? "unknown");
-    setStep("drinks");
-  };
-
-  const handleDrinkChange = (newSelected: string[]) => {
-    const newTotal = totalPerPerson(PACKAGES[packageId], newSelected);
-    const added = newSelected.filter((id) => !selected.includes(id));
-    const removed = selected.filter((id) => !newSelected.includes(id));
-
-    if (added.length > 0) {
-      AnalyticsEvents.drinkToggle(added[0], packageId, "add", newTotal);
-    }
-    if (removed.length > 0) {
-      AnalyticsEvents.drinkToggle(removed[0], packageId, "remove", newTotal);
-    }
-
-    setSelected(newSelected);
+    setStep("lead"); // PULA "drinks" → vai direto para "lead"
   };
 
   const restart = () => {
@@ -270,19 +253,6 @@ export default function App() {
               </motion.div>
             )}
 
-            {step === "drinks" && segment && (
-              <motion.div key="drinks" {...screen}>
-                <DrinksScreen
-                  segment={segment}
-                  packageId={packageId}
-                  selected={selected}
-                  onChange={handleDrinkChange}
-                  onNext={() => setStep("lead")}
-                  onBack={() => setStep("package")}
-                />
-              </motion.div>
-            )}
-
             {step === "lead" && segment && (
               <motion.div key="lead" {...screen}>
                 <LeadCaptureScreen
@@ -291,7 +261,7 @@ export default function App() {
                     setLeadTelefone(telefone);
                     setStep("result");
                   }}
-                  onBack={() => setStep("drinks")}
+                  onBack={() => setStep("package")}
                 />
               </motion.div>
             )}
@@ -305,7 +275,7 @@ export default function App() {
                   selected={selected}
                   leadNome={leadNome}
                   leadTelefone={leadTelefone}
-                  onBack={() => setStep("drinks")}
+                  onBack={() => setStep("package")}
                   onRestart={restart}
                 />
               </motion.div>

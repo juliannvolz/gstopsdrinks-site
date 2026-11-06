@@ -1,4 +1,4 @@
-/* GS TOP DRINKS — Pacotes & Preços (Bronze • Prata • Ouro) */
+/* GS TOP DRINKS — Pacotes & Preços (Ouro • Prata • Bronze) */
 /* Base: 45/65/95  |  Teto: +30%  |  Valores reais a ser ajustados */
 
 export type PackageId = "bronze" | "prata" | "ouro";
@@ -60,60 +60,6 @@ const d = (
 };
 
 export const PACKAGES: Record<PackageId, Package> = {
-  bronze: {
-    id: "bronze",
-    name: "Bronze",
-    tagline: "Entry level — Caipirinhas clássicas e refrescos",
-    base: 45,
-    ceiling: 60,
-    image: "/gs/images/segments/hero-main.jpg",
-    features: [
-      "Bar montado + 1 bartender GS",
-      "Insumos, frutas frescas, gelo e copos",
-      "Caipirinhas de frutas da estação",
-      "Refrescos e sodas variadas",
-      "Clássicos: Mojito, Cuba Libre, Gin Tônica, Moscow Mule",
-    ],
-    drinks: [
-      d("c-limao", "Caipirinha de Limão", "Cachaça, limão taiti e açúcar — a clássica brasileira", 4.0, ["cítrico", "refrescante"], "rocks", "#dcef9a", { image: "/gs/images/drinks/caipirinha-limao.webp" }),
-      d("c-abacaxi", "Caipirinha de Abacaxi", "Abacaxi pérola e hortelã fresca", 5.0, ["frutado", "herbal"], "rocks", "#f4d35e", { image: "/gs/images/drinks/caipirinha-abacaxi.webp" }),
-      d("sensacao", "Batida Sensação", "Frutas vermelhas, limão e espuma leve", 5.5, ["frutado", "cítrico"], "rocks", "#f0a43a", { image: "/gs/images/drinks/batida-sensacao.webp" }),
-      d("deuses", "Batida dos Deuses", "Néctar de abacaxi, laranja e creme", 6.0, ["frutado", "cremoso"], "rocks", "#e8453f", { image: "/gs/images/drinks/batida-deuses.webp" }),
-      d("paradise", "Paradise", "Camadas tropicais em degradê — queridinho das fotos", 6.5, ["frutado", "doce"], "hurricane", ["#2aa7ff", "#ffc21a", "#ff7a1f", "#d91e2a"], { signature: true, image: "/gs/images/drinks/paradise.webp" }),
-      d("azul", "Lagoa Azul", "Blue Curaçau, limão e soda — visual impact", 5.0, ["cítrico", "visual"], "highball", "#7fb3d5", { image: "/gs/images/drinks/lagoa-azul.webp" }),
-      d("italiana", "Soda Italiana", "Água com gás e xarope de maçã verde", 3.5, ["refrescante"], "highball", "#a8e6cf", { zero: true, image: "/gs/images/drinks/soda-italiana.webp" }),
-      d("morango", "Batida de Morango", "Morangos frescos macerados com limão e cachaça", 5.0, ["frutado", "doce"], "rocks", "#e8484f", { image: "/gs/images/drinks/batida-morango.webp" }),
-      d("sex-beach", "Sex on the Beach", "Vodka, xarope de granadine, néctar de laranja e pêssego", 6.0, ["frutado", "álcool"], "highball", "#f5a9b8", { image: "/gs/images/drinks/sex-on-the-beach.webp" }),
-      d("nectar-abacaxi", "Néctar de Abacaxi", "Abacaxi com côco e leite condensado (sem álcool)", 4.5, ["frutado", "cremoso"], "highball", "#f5c679", { zero: true, image: "/gs/images/drinks/nectar-abacaxi.webp" }),
-    ],
-  },
-  prata: {
-    id: "prata",
-    name: "Prata",
-    tagline: "Coquetéis autorais + clássicos refinados",
-    base: 65,
-    ceiling: 85,
-    image: "/gs/images/segments/lineup.jpg",
-    features: [
-      "Tudo do Bronze + 2º bartender",
-      "2 coquetéis autorais da casa",
-      "Welcome drink na recepção",
-      "Bar com identidade visual do evento",
-      "Caipirinha da estação (fruta surpresa)",
-    ],
-    drinks: [
-      d("mosc-mule", "Moscow Mule", "Vodka, limão e espuma de gengibre na caneca de cobre", 6.0, ["picante", "cítrico"], "mug", "copper", { image: "/gs/images/drinks/moscow-mule.webp" }),
-      d("cosmopolitan", "Cosmopolitan", "Vodka, cranberry, licor de laranja e limão", 7.0, ["frutado", "seco"], "martini", "#e5486c", { image: "/gs/images/drinks/cosmopolitan.webp" }),
-      d("mojito", "Mojito", "Rum, hortelã, limão e água com gás", 5.5, ["refrescante", "herbal"], "highball", "#d3ecb4", { image: "/gs/images/drinks/mojito.webp" }),
-      d("gin-tropical", "Gin Tropical", "Gin, fruta da época e energético tropical", 7.0, ["herbal", "cítrico"], "coupe", "#ffe066", { image: "/gs/images/drinks/gin-tropical.webp" }),
-      d("margarita", "Margarita", "Tequila, licor de laranja, limão e borda de sal", 7.0, ["cítrico", "salino"], "coupe", "#e6efa6", { image: "/gs/images/drinks/margarita.webp" }),
-      d("apero-spritz", "Aperol Spritz", "Aperol, espumante e laranja — o amargosto elegante", 7.5, ["espumante", "amargo"], "wine", "#f26b1d", { image: "/gs/images/drinks/aperol-spritz.webp" }),
-      d("whisky-sour", "Whisky Sour", "Bourbon, limão, açúcar e espuma aveludada", 8.0, ["encorpado", "cítrico"], "rocks", "#e3ad55", { image: "/gs/images/drinks/whisky-sour.webp" }),
-      d("negroni", "Negroni", "Gin, Campari e vermute rosso — o amargo clássico", 8.5, ["amargo", "encorpado"], "rocks", "#b3231c", { image: "/gs/images/drinks/negroni.webp" }),
-      d("caipi-maracutai", "Caipirinha de Maracujá", "Maracujá fresco, cachaça e toque de hortelã", 5.0, ["frutado", "cítrico"], "rocks", "#f2b134", { image: "/gs/images/drinks/caipirinha-maracuja-limao.webp" }),
-      d("caipi-morango", "Caipirinha de Morango", "Morangos frescos macerados com limão e cachaça", 5.0, ["frutado", "doce"], "rocks", "#e8484f", { image: "/gs/images/drinks/caipirinha-morango.webp" }),
-    ],
-  },
   ouro: {
     id: "ouro",
     name: "Ouro",
@@ -129,20 +75,67 @@ export const PACKAGES: Record<PackageId, Package> = {
       "Show dos Tequileiros incluso",
       "Welcome drink premium + brinde especial",
       "Carta 100% personalizada com a identidade do evento",
+      "6 drinks exclusivos: Caipirinha Morango, Caipirinha Maracujá, Aperol Spritz, Whisky Sour, Negroni, Moscow Mule",
     ],
     drinks: [
-      d("negroni", "Negroni Premium", "Gin, Campari e vermute rosso — seleção especial", 9.0, ["amargo", "encorpado"], "rocks", "#b3231c", { image: "/gs/images/drinks/negroni-premium.webp" }),
-      d("whisky-sour", "Whisky Sour Premium", "Whisky bourbon, limão, açúcar e espuma diferenciada", 10.0, ["encorpado", "cítrico"], "rocks", "#e3ad55", { image: "/gs/images/drinks/whisky-sour-premium.webp" }),
-      d("aperol-spritz", "Aperol Spritz Premium", "Aperol, espumante selecionado e laranja sanguínea", 9.5, ["espumante", "amargo"], "wine", "#f26b1d", { image: "/gs/images/drinks/aperol-spritz-premium.webp" }),
-      d("caipi-maracutai-ouro", "Caipirinha de Maracujá Premium", "Maracujá selecionado, cachaça envelhecida e hortelã", 7.5, ["frutado", "cítrico"], "rocks", "#f2b134", { image: "/gs/images/drinks/caipirinha-maracuja-limao.webp" }),
-      d("sex-beach-ouro", "Sex on the Beach Premium", "Vodka top-shelf, granadine artesanal e frutas frescas", 7.0, ["frutado", "álcool"], "highball", "#f5a9b8", { image: "/gs/images/drinks/sex-on-the-beach-premium.webp" }),
-      d("mosc-mule-ouro", "Moscow Mule Premium", "Vodka premium com espuma de gengibre caseira", 7.5, ["picante", "cítrico"], "mug", "copper", { image: "/gs/images/drinks/moscow-mule-premium.webp" }),
-      d("caipi-morango-ouro", "Caipirinha de Morango Premium", "Morangos da fazenda, cachaça artesanal e limão siciliano", 6.5, ["frutado", "doce"], "rocks", "#e8484f", { image: "/gs/images/drinks/caipirinha-morango.webp" }),
+      d("caipi-morango", "Caipirinha de Morango", "Vodka, Cachaça, Água com gás, Açúcar opcional", 6.5, ["frutado", "doce"], "rocks", "#e8484f", { image: "/gs/images/drinks/caipirinha-morango.webp" }),
+      d("caipi-maracuja", "Caipirinha de Maracujá", "Cachaça, Vodka, Água com gás, Açúcar", 7.5, ["frutado", "cítrico"], "rocks", "#f2b134", { image: "/gs/images/drinks/caipirinha-maracuja-limao.webp" }),
+      d("aperol-spritz", "Aperol Spritz", "Aperol, Água com gás, Espumante Pro seco, meia fatia de laranja", 9.5, ["espumante", "amargo"], "wine", "#f26b1d", { image: "/gs/images/drinks/APEROLSPRITZ.jpg" }),
+      d("whisky-sour", "Whisky Sour", "Suco de limão, Xarope de Açúcar, espuma", 10.0, ["encorpado", "cítrico"], "rocks", "#e3ad55", { image: "/gs/images/drinks/WHISKYSOUR.jpg" }),
+      d("negroni", "Negroni", "Gin, Campari, Wermouth", 9.0, ["amargo", "encorpado"], "rocks", "#b3231c", { image: "/gs/images/drinks/NEGRONI.jpg" }),
+      d("moscow-mule", "Moscow Mule", "Xarope de Gengibre, Água com gás, Suco de limão, Vodka opcional, Espuma chantilly, Raspa de limão", 7.5, ["picante", "cítrico"], "mug", "copper", { image: "/gs/images/drinks/moscow-mule.webp" }),
+    ],
+  },
+  prata: {
+    id: "prata",
+    name: "Prata",
+    tagline: "Coquetéis autorais + clássicos refinados",
+    base: 65,
+    ceiling: 85,
+    image: "/gs/images/segments/lineup.jpg",
+    features: [
+      "Tudo do Bronze + 2º bartender",
+      "2 coquetéis autorais da casa",
+      "Welcome drink na recepção",
+      "Bar com identidade visual do evento",
+      "Caipirinha da estação (fruta surpresa)",
+      "7 drinks: Sex on the Beach, Cosmopolitan, Mojito, Piña Colada, Caipirinha Morango, Caipirinha Maracujá, Moscow Mule",
+    ],
+    drinks: [
+      d("sex-beach", "Sex on the Beach", "Xarope de Grenadine, Néctar de Laranja, Xarope de Pêssego, Vodka opcional", 6.0, ["frutado", "álcool"], "highball", "#f5a9b8", { image: "/gs/images/drinks/SEXONTHEBEACH.jpg" }),
+      d("cosmopolitan", "Cosmopolitan", "Xarope de Cranberry, Néctar de Cranberry, Licor de laranja, Vodka opcional", 7.0, ["frutado", "seco"], "martini", "#e5486c", { image: "/gs/images/drinks/COSMOPOLITAN.jpg" }),
+      d("mojito", "Mojito", "Bacardi carta Blanca opcional, Água com gás, Suco de limão, Açúcar opcional, Folhas de Hortelã", 5.5, ["refrescante", "herbal"], "highball", "#d3ecb4", { image: "/gs/images/drinks/MOJITO.jpg" }),
+      d("pina-colada", "Piña Colada", "Néctar de Abacaxi, Leite condensado, Leite de côco, Vodka opcional", 7.0, ["frutado", "cremoso"], "hurricane", "#f5c679", { image: "/gs/images/drinks/PINACOLADA.jpg" }),
+      d("caipi-morango-prata", "Caipirinha de Morango", "Vodka, Cachaça, Água com gás, Açúcar opcional", 5.0, ["frutado", "doce"], "rocks", "#e8484f", { image: "/gs/images/drinks/caipirinha-morango.webp" }),
+      d("caipi-maracuja-prata", "Caipirinha de Maracujá", "Cachaça, Vodka, Água com gás, Açúcar", 5.0, ["frutado", "cítrico"], "rocks", "#f2b134", { image: "/gs/images/drinks/caipirinha-maracuja-limao.webp" }),
+      d("moscow-mule-prata", "Moscow Mule", "Xarope de Gengibre, Água com gás, Suco de limão, Vodka opcional, Espuma chantilly, Raspa de limão", 6.0, ["picante", "cítrico"], "mug", "copper", { image: "/gs/images/drinks/moscow-mule.webp" }),
+    ],
+  },
+  bronze: {
+    id: "bronze",
+    name: "Bronze",
+    tagline: "Os clássicos que todo mundo ama",
+    base: 45,
+    ceiling: 60,
+    image: "/gs/images/segments/hero-main.jpg",
+    features: [
+      "Bar montado + 1 bartender GS",
+      "Insumos, frutas frescas, gelo e copos",
+      "Drinks refrescantes e coloridos",
+      "Opções sem álcool incluídas",
+      "5 drinks: Lagoa Azul, Soda Italiana, Batida Sensação, Batida dos Deuses, Paradise",
+    ],
+    drinks: [
+      d("lagoa-azul", "Lagoa Azul", "Soda, Suco de Limão, Xarope de Curaçau Blue, Vodka opcional", 5.0, ["cítrico", "visual"], "highball", "#7fb3d5", { image: "/gs/images/drinks/LAGOAZUL.jpg" }),
+      d("soda-italiana", "Soda Italiana", "Água com gás, Xarope de Maçã Verde, Vodka opcional", 3.5, ["refrescante"], "highball", "#a8e6cf", { zero: true, image: "/gs/images/drinks/SODAITALIANA.jpg" }),
+      d("batida-sensacao", "Batida Sensação", "Néctar de Morango, Leite condensado, Xarope de Morango, Vodka opcional", 5.5, ["frutado", "cremoso"], "rocks", "#f0a43a", { image: "/gs/images/drinks/BATIDASENSACAO.jpg" }),
+      d("batida-deuses", "Batida dos Deuses", "Néctar de Abacaxi, Néctar de Laranja, Leite condensado, Vodka opcional", 6.0, ["frutado", "cremoso"], "rocks", "#e8453f", { image: "/gs/images/drinks/BATIDADEUSES.jpg" }),
+      d("paradise", "Paradise", "Néctar de Laranja, Xarope de Grenadine, Xarope de Curaçau Blue, Vodka", 6.5, ["frutado", "visual"], "hurricane", ["#2aa7ff", "#ffc21a", "#ff7a1f", "#d91e2a"], { signature: true, image: "/gs/images/drinks/PARADISE.jpg" }),
     ],
   },
 };
 
-export const PACKAGE_ORDER: PackageId[] = ["bronze", "prata", "ouro"];
+export const PACKAGE_ORDER: PackageId[] = ["ouro", "prata", "bronze"];
 
 export const MIN_DRINKS = 4;
 export const MAX_DRINKS = 8;
@@ -173,7 +166,7 @@ export interface VibeOption {
 }
 
 export const VIBE_OPTIONS: VibeOption[] = [
-  { id: "bronze", label: "Os clássicos que todo mundo ama", sub: "Caipirinhas, mojito, gin tônica", meta: "Pacote Bronze" },
-  { id: "prata", label: "Clássicos com autorais da casa", sub: "O equilíbrio entre o conhecido e a surpresa", meta: "Pacote Prata" },
   { id: "ouro", label: "Uma experiência de show", sub: "Destilados premium, gelo seco e atrações", meta: "Pacote Ouro" },
+  { id: "prata", label: "Clássicos com autorais da casa", sub: "O equilíbrio entre o conhecido e a surpresa", meta: "Pacote Prata" },
+  { id: "bronze", label: "Os clássicos que todo mundo ama", sub: "Caipirinhas, mojito, gin tônica", meta: "Pacote Bronze" },
 ];

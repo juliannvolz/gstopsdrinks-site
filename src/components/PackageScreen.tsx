@@ -82,7 +82,7 @@ export default function PackageScreen({ segment, recommended, onSelect, onBack }
                   ))}
                 </ul>
                 <Btn variant={hero ? "solid" : "line"} onClick={() => onSelect(id)} full className="mt-8">
-                  Ver carta · {p.drinks.length} drinks
+                  Continuar para contato
                 </Btn>
               </div>
             </motion.article>
