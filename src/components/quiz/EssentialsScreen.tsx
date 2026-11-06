@@ -48,9 +48,10 @@ export default function EssentialsScreen({ selected, onChange, onNext, onBack }:
         </Reveal>
       </div>
 
-      <div className="mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]">
+      <div className="mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {ESSENTIALS.map((item, i) => {
           const active = selected.includes(item.id);
+          const isLast = i === ESSENTIALS.length - 1;
           return (
             <motion.button
               key={item.id}
@@ -63,7 +64,7 @@ export default function EssentialsScreen({ selected, onChange, onNext, onBack }:
                 active
                   ? "border-acc bg-acc/10"
                   : "border-fg/15 hover:border-fg/30 hover:bg-fg/5"
-              }`}
+              } ${isLast ? "lg:col-span-2 lg:col-start-2" : ""}`}
             >
               <motion.span
                 initial={false}
