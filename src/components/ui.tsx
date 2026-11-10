@@ -32,6 +32,7 @@ export function Btn({
   arrow = true,
   icon,
   className = "",
+  type = "button",
 }: BtnProps) {
   const base = `group relative inline-flex items-center gap-3 px-7 py-[17px] text-[12.5px] font-semibold uppercase tracking-[0.18em] transition-[transform,box-shadow,background-color,border-color,color] duration-200 outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-acc ${
     full ? "w-full justify-between" : "justify-center"
@@ -56,9 +57,8 @@ export function Btn({
         {inner}
       </a>
     );
-  const buttonType = type ?? "button";
   return (
-    <button type={buttonType} onClick={disabled ? undefined : onClick} aria-disabled={disabled} className={cls}>
+    <button type={type} onClick={disabled ? undefined : onClick} aria-disabled={disabled} className={cls}>
       {inner}
     </button>
   );
