@@ -9,6 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Btn, Footer, Label, Marquee } from "./ui";
 import { CitrusWheel, Stamp } from "./brand";
 import { useReducedMotion, useGSAP } from "../hooks/useGSAP";
+import Testimonials from "./Testimonials";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -195,7 +196,8 @@ export default function IntroScreen({ onStart }: { onStart: () => void }) {
         </div>
       </section>
 
-      <Footer />
-    </>
+<Footer />
+        <Testimonials />
+      </>
   );
 }
