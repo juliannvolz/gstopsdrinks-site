@@ -6,9 +6,8 @@
 import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Btn, Footer, Label, Marquee, TextLink } from "./ui";
+import { Btn, Footer, Label, Marquee } from "./ui";
 import { CitrusWheel, Stamp } from "./brand";
-import { waLink } from "../data/catalog";
 import { useReducedMotion, useGSAP } from "../hooks/useGSAP";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -20,9 +19,9 @@ const STATS: [string, string][] = [
 ];
 
 const HOW: [string, string][] = [
-  ["Conte sobre o evento", "Três perguntas rápidas: o momento, o número de convidados e o estilo de bar."],
-  ["Escolha o pacote", "Bronze, Prata ou Ouro — cada um com estrutura e carta próprias."],
-  ["Monte a sua carta", "Selecione os drinks e veja o valor por pessoa ser calculado na hora."],
+  ["Convidados", "Informe o número de pessoas para dimensionarmos a equipe e o investimento."],
+  ["Evento", "Escolha o tipo de celebração: Casamento, 15 Anos, Formatura, Corporativo, Aniversário ou Festas."],
+  ["Pacote", "Selecione Bronze, Prata ou Ouro — cada um com estrutura, drinks e valor definidos."],
 ];
 
 const OBS_VALORES = "Os valores exibidos são <strong>estimativas aproximadas</strong> baseadas em médias. O orçamento real é <strong>personalizado com nosso consultor no WhatsApp</strong> — o simulador serve como referência, o fechamento acontece na conversa direta.";
@@ -113,9 +112,6 @@ export default function IntroScreen({ onStart }: { onStart: () => void }) {
             </div>
             <div className="gs-cta mt-10 flex flex-wrap items-center gap-x-8 gap-y-5">
               <Btn onClick={onStart}>Montar meu evento</Btn>
-              <TextLink href={waLink("Olá, GS Top Drinks! Gostaria de um orçamento de open bar.")}>
-                Prefiro falar no WhatsApp
-              </TextLink>
             </div>
             <div className="gs-stat mt-14">
               <dl className="grid max-w-xl grid-cols-3 border-t border-fg/15">
@@ -189,8 +185,8 @@ export default function IntroScreen({ onStart }: { onStart: () => void }) {
           <div className="md:col-span-8 lg:col-span-8 lg:col-start-5">
             <Label index="—">Quem assina o bar</Label>
             <blockquote className="mt-6 font-display text-[clamp(1.6rem,3vw,2.6rem)] italic leading-[1.18] tracking-[-0.01em]">
-              “Nosso compromisso é tornar o seu momento único e incrível, cuidando de cada detalhe do bar para que você
-              apenas aproveite.”
+              "Nosso compromisso é tornar o seu momento único e incrível, cuidando de cada detalhe do bar para que você
+              apenas aproveite."
             </blockquote>
             <p className="mt-8 text-[13px] font-semibold uppercase tracking-[0.2em]">
               Gilmar Steffen <span className="font-normal text-fg/50">· à frente da GS Top Drinks</span>
