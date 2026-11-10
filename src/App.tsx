@@ -4,7 +4,7 @@ import { GSMark, HurricaneGlass } from "./components/brand";
 import { EASE, IgIcon } from "./components/ui";
 import IntroScreen from "./components/IntroScreen";
 import QuizScreen from "./components/QuizScreen";
-import SegmentScreen from "./components/SegmentScreen";
+import SegmentSelectionScreen from "./components/SegmentSelectionScreen";
 import PackageScreen from "./components/PackageScreen";
 import LeadCaptureScreen from "./components/LeadCaptureScreen";
 import ResultScreen from "./components/ResultScreen";
@@ -206,9 +206,16 @@ export default function App() {
               </motion.div>
             )}
 
-            {step === "segment" && segment && (
-              <motion.div key={`seg-${segment}`} {...screen}>
-                <SegmentScreen segment={SEGMENTS[segment]} onNext={() => setStep("package")} onBack={() => setStep("q0")} />
+            {step === "segment" && (
+              <motion.div key="segment" {...screen}>
+                <SegmentSelectionScreen
+                  selected={segment}
+                  onAnswer={(v) => {
+                    setSegment(v);
+                    setStep("package");
+                  }}
+                  onBack={() => setStep("q0")}
+                />
               </motion.div>
             )}
 
