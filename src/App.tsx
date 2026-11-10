@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { GSMark, HurricaneGlass } from "./components/brand";
 import { EASE, IgIcon } from "./components/ui";
@@ -111,7 +111,7 @@ export default function App() {
   }, [step]);
 
   // Tema por nicho: variáveis no :root (portais e barra fixa herdam)
-  useEffect(() => {
+  useLayoutEffect(() => {
     const root = document.documentElement;
     const vars: Record<string, string> = {
       "--bg": theme.bg,
@@ -124,7 +124,9 @@ export default function App() {
     };
     Object.entries(vars).forEach(([k, v]) => root.style.setProperty(k, v));
     root.style.colorScheme = theme.mode;
+    root.dataset.theme = theme.mode; // para CSS fallback
     document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme.bg);
+    document.querySelector('meta[name="color-scheme"]')?.setAttribute("content", theme.mode);
   }, [theme]);
 
   const goPackage = (p: PackageId) => {
