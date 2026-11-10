@@ -1,6 +1,6 @@
 import { useMemo, type CSSProperties, type ReactNode } from "react";
 import { motion } from "framer-motion";
-import { MessageCircle, Download } from "lucide-react";
+import { MessageCircle, Download, Truck, Clock, AlertCircle } from "lucide-react";
 import { AnimatedMoney, Btn, EASE, IgIcon, Label, Reveal, TextLink } from "./ui";
 import { useTheme } from "../theme";
 import { generateComandaPDF, generateSimplePDF } from "../utils/pdf";
@@ -11,6 +11,7 @@ import {
   PACKAGES,
   SEGMENTS,
   buildProposalMessage,
+  calculatePricing,
   fmt,
   fmtNum,
   totalPerPerson,
@@ -48,6 +49,17 @@ const Rule = ({ double = false }: { double?: boolean }) => (
   <div className={`my-4 ${double ? "border-t-[3px] border-double" : "border-t border-dashed"}`} style={{ borderColor: `${INK}59` }} />
 );
 
+function InfoRow({ icon: Icon, label, value, className = "" }: { icon: React.ComponentType<{ className?: string }>; label: string; value: ReactNode; className?: string }) {
+  return (
+    <div className={`flex items-center gap-3 text-[13px] text-fg/70 ${className}`}>
+      <Icon className="h-4 w-4 text-acc shrink-0" />
+      <span className="font-medium">{label}</span>
+      <span className="leader" />
+      <span className="shrink-0 font-mono tabular-nums">{value}</span>
+    </div>
+  );
+}
+
 export default function ResultScreen({ segment, guests, packageId, selected, leadNome, leadTelefone, onBack, onRestart }: Props) {
   const theme = useTheme();
   const pkg = PACKAGES[packageId];
@@ -55,8 +67,19 @@ export default function ResultScreen({ segment, guests, packageId, selected, lea
   const drinks = pkg.drinks.filter((x) => selected.includes(x.id));
   const perPerson = totalPerPerson(pkg, selected);
   const over = perPerson > pkg.ceiling + 0.001;
-  const totalEvent = perPerson * guests.estimate;
-  const msg = buildProposalMessage({ segment: seg, guests, pkg, drinks, perPerson, total: totalEvent });
+  
+  // Novo breakdown de preço
+  const pricing = useMemo(() => calculatePricing({
+    pkg,
+    selectedDrinkIds: selected,
+    guests: { estimate: guests.estimate },
+    segment: seg,
+    includePistolaFumaca: false, // por enquanto false, pode ser adicionado como opção depois
+    distanciaKm: 0, // por enquanto 0, pode ser adicionado como input depois
+  }), [pkg, selected, guests.estimate, seg]);
+
+  const totalEvent = pricing.totalEvento;
+  const msg = buildProposalMessage({ segment: seg, guests, pkg, drinks, perPerson: pricing.valorFinalPorPessoa, total: totalEvent });
   const number = useMemo(
     () => 1000 + [...selected.join("")].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) % 9000, 7),
     [selected]
@@ -68,7 +91,7 @@ export default function ResultScreen({ segment, guests, packageId, selected, lea
   const drinksNomes = drinks.map((d) => d.name).join(", ");
 
   const salvarComanda = async (): Promise<boolean> => {
-    if (!leadTelefone) return true; // sem telefone obrigatório, não bloqueia
+    if (!leadTelefone) return true;
     const resultado = await saveComanda({
       nome_cliente: leadNome ?? null,
       telefone: leadTelefone,
@@ -76,7 +99,7 @@ export default function ResultScreen({ segment, guests, packageId, selected, lea
       convidados: guests.estimate,
       pacote: pkg.name,
       drinks: drinksNomes,
-      valor_por_pessoa: perPerson,
+      valor_por_pessoa: pricing.valorFinalPorPessoa,
       valor_total_evento: totalEvent,
     });
     if (!resultado.ok) {
@@ -98,7 +121,7 @@ export default function ResultScreen({ segment, guests, packageId, selected, lea
         packageId,
         pkg,
         selectedDrinks: drinks,
-        perPerson,
+        perPerson: pricing.valorFinalPorPessoa,
         totalEvent,
         number,
         date,
@@ -111,7 +134,7 @@ export default function ResultScreen({ segment, guests, packageId, selected, lea
         packageId,
         pkg,
         selectedDrinks: drinks,
-        perPerson,
+        perPerson: pricing.valorFinalPorPessoa,
         totalEvent,
         number,
         date,
@@ -134,9 +157,9 @@ export default function ResultScreen({ segment, guests, packageId, selected, lea
 
           <Reveal delay={0.1}>
             <div className="mt-10 border-t border-fg/15 pt-8">
-              <p className="font-mono text-[13px] uppercase tracking-[0.14em] text-fg/55">Estimativa por pessoa</p>
+              <p className="font-mono text-[13px] uppercase tracking-[0.14em] text-fg/55">Investimento por pessoa</p>
               <AnimatedMoney
-                value={perPerson}
+                value={pricing.valorFinalPorPessoa}
                 className="gs-offset mt-4 block font-sans text-[clamp(3.4rem,8.5vw,6.6rem)] font-extrabold leading-[0.9] tracking-[-0.045em] tabular-nums"
               />
               <p className="mt-6 inline-flex items-center border px-3 py-1.5 text-[12px] font-semibold uppercase tracking-[0.14em]" style={{ color: "var(--acc)", borderColor: "var(--acc)" }}>
@@ -158,11 +181,50 @@ export default function ResultScreen({ segment, guests, packageId, selected, lea
                 </div>
               ))}
             </dl>
+            
+            {/* Breakdown de preço */}
+            <div className="mt-8 space-y-4 border border-fg/15 rounded-lg p-5 bg-bg2">
+              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-fg/55">Detalhamento do investimento</p>
+              <div className="space-y-2 text-[14px] text-fg/75">
+                <InfoRow icon={Truck} label="Pacote base" value={fmt.format(pricing.basePacote)} />
+                <InfoRow icon={Truck} label="Drinks inclusos" value={fmt.format(pricing.drinksInclusos)} />
+                <InfoRow icon={Truck} label="Subtotal" value={fmt.format(pricing.subtotalPorPessoa)} />
+                <div className="flex items-center gap-3 text-[13px] text-fg/60 border-t border-fg/15 pt-2">
+                  <AlertCircle className="h-4 w-4 text-acc shrink-0" />
+                  <span>+ Margem operacional (20%)</span>
+                  <span className="leader" />
+                  <span className="shrink-0 font-mono tabular-nums">{fmt.format(pricing.margem)}</span>
+                </div>
+                <InfoRow icon={Truck} label="Valor com margem" value={fmt.format(pricing.valorComMargem)} />
+                {pricing.valorFinalPorPessoa > pricing.valorComMargem && (
+                  <div className="flex items-center gap-3 text-[13px] text-fg/60 border-t border-fg/15 pt-2">
+                    <AlertCircle className="h-4 w-4 text-acc shrink-0" />
+                    <span>Aplicada despesa mínima (30%)</span>
+                    <span className="leader" />
+                    <span className="shrink-0 font-mono tabular-nums">{fmt.format(pricing.valorFinalPorPessoa)}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
             <p className="mt-6 max-w-lg text-[15px] leading-relaxed text-fg/65">
               Investimento estimado de <strong className="font-semibold text-fg">≈ {fmt.format(totalEvent)}</strong> para
               cerca de {guests.estimate} convidados, com {guests.staff.toLowerCase()}. Valores-base de simulação — a proposta
               final é confirmada pela equipe GS.
             </p>
+            
+            {/* Informações adicionais */}
+            <div className="mt-8 space-y-3 border border-fg/15 rounded-lg p-5 bg-bg2">
+              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-fg/55">Informações do evento</p>
+              <div className="space-y-2 text-[14px] text-fg/75">
+                <InfoRow icon={Clock} label="Tempo mínimo" value={`${pricing.tempoMinimoHoras}h`} />
+                <InfoRow icon={Truck} label="Deslocamento" value={pricing.deslocamento.observacao} />
+                <InfoRow icon={Clock} label="Prazo de entrega" value={pricing.prazoEntrega} />
+                {pricing.opcionais.pistolaFumaca && (
+                  <InfoRow icon={AlertCircle} label="Pistola de fumaça (opcional)" value={fmt.format(pricing.opcionais.valorPistolaFumaca)} />
+                )}
+              </div>
+            </div>
           </Reveal>
 
           <Reveal>
@@ -171,7 +233,6 @@ export default function ResultScreen({ segment, guests, packageId, selected, lea
                   onClick={async () => {
                     try { await salvarComanda(); } catch (e) { console.warn("Falha ao salvar comanda", e); }
 
-                    // Envia para Google Sheets (assíncrono, não bloqueia WhatsApp)
                     try {
                       await sendComandaToSheets({
                         nome: leadNome || '',
@@ -180,7 +241,7 @@ export default function ResultScreen({ segment, guests, packageId, selected, lea
                         convidados: guests.estimate,
                         pacote: pkg.name,
                         drinks: drinksNomes,
-                        valorPorPessoa: perPerson,
+                        valorPorPessoa: pricing.valorFinalPorPessoa,
                         valorTotal: totalEvent,
                         comandaId: number,
                       });
@@ -238,8 +299,23 @@ export default function ResultScreen({ segment, guests, packageId, selected, lea
               </div>
               <Rule double />
               <div className="flex items-baseline justify-between font-sans">
+                <span className="text-[13px] font-semibold uppercase tracking-[0.14em]">Subtotal / pessoa</span>
+                <span className="text-2xl font-extrabold tabular-nums">{fmt.format(pricing.subtotalPorPessoa)}</span>
+              </div>
+              <div className="flex items-baseline justify-between font-sans text-[13px] text-fg/60">
+                <span>+ Margem 20%</span>
+                <span className="tabular-nums">+{fmt.format(pricing.margem)}</span>
+              </div>
+              {pricing.valorFinalPorPessoa > pricing.valorComMargem && (
+                <div className="flex items-baseline justify-between font-sans text-[13px] text-acc">
+                  <span>+ Despesa mínima 30%</span>
+                  <span className="tabular-nums">→ {fmt.format(pricing.valorFinalPorPessoa)}</span>
+                </div>
+              )}
+              <Rule />
+              <div className="flex items-baseline justify-between font-sans">
                 <span className="text-[13px] font-semibold uppercase tracking-[0.14em]">Total / pessoa</span>
-                <span className="text-2xl font-extrabold tabular-nums">{fmt.format(perPerson)}</span>
+                <span className="text-2xl font-extrabold tabular-nums">{fmt.format(pricing.valorFinalPorPessoa)}</span>
               </div>
               <p className="mt-1 text-right text-[13px] opacity-60">para cerca de {guests.estimate} convidados</p>
               <div className="mt-2 flex items-baseline justify-between font-sans">

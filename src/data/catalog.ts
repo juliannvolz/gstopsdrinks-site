@@ -54,6 +54,7 @@ import {
   MIN_DRINKS 
 } from "./packages";
 import { fmt } from "./drinks";
+import type { Segment } from "./segments";
 
 const EPS = 0.001;
 
@@ -195,6 +196,100 @@ export function seedSelection(pkg: Pkg): string[] {
   const zero = pkg.drinks.find((x: Drink) => x.zero);
   if (zero && acc + zero.cost <= budget) out.push(zero.id);
   return out;
+}
+
+/* --------------------------- Pricing Engine ------------------------ */
+
+export const MARGEM_PADRAO = 0.20; // 20%
+export const DESPESA_MINIMA_PCT = 0.30; // 30% do total
+export const DESLOCAMENTO_GRATIS_KM = 50;
+export const PISTOLA_FUMACA_VALOR = 800;
+export const PRAZO_ENTREGA_DIAS = "até 4ª-feira";
+
+export interface PricingBreakdown {
+  basePacote: number;
+  drinksInclusos: number;
+  subtotalPorPessoa: number;
+  margem: number;
+  valorComMargem: number;
+  despesaMinima: number;
+  valorFinalPorPessoa: number;
+  totalEvento: number;
+  opcionais: {
+    pistolaFumaca: boolean;
+    valorPistolaFumaca: number;
+  };
+  deslocamento: {
+    km: number;
+    gratis: boolean;
+    observacao: string;
+  };
+  tempoMinimoHoras: number;
+  prazoEntrega: string;
+}
+
+/**
+ * Calcula o breakdown completo de preço com todas as regras de negócio
+ */
+export function calculatePricing(p: {
+  pkg: Pkg;
+  selectedDrinkIds: string[];
+  guests: { estimate: number };
+  segment: Segment;
+  includePistolaFumaca?: boolean;
+  distanciaKm?: number;
+}): PricingBreakdown {
+  const basePacote = p.pkg.base;
+  const drinksInclusos = drinkSum(p.pkg, p.selectedDrinkIds);
+  const subtotalPorPessoa = basePacote + drinksInclusos;
+  
+  // Aplicar margem de 20%
+  const margem = subtotalPorPessoa * MARGEM_PADRAO;
+  const valorComMargem = subtotalPorPessoa + margem;
+  
+  // Despesa mínima (30% do total com margem)
+  const totalComMargem = valorComMargem * p.guests.estimate;
+  const despesaMinima = totalComMargem * DESPESA_MINIMA_PCT;
+  
+  // Valor final por pessoa (máximo entre valor com margem e despesa mínima / convidados)
+  const valorFinalPorPessoa = Math.max(valorComMargem, despesaMinima / p.guests.estimate);
+  const totalEvento = valorFinalPorPessoa * p.guests.estimate;
+  
+  // Opcionais
+  const pistolaFumaca = p.includePistolaFumaca ?? false;
+  const valorPistolaFumaca = pistolaFumaca ? PISTOLA_FUMACA_VALOR : 0;
+  
+  // Deslocamento
+  const distanciaKm = p.distanciaKm ?? 0;
+  const deslocamentoGratis = distanciaKm <= DESLOCAMENTO_GRATIS_KM;
+  let observacaoDeslocamento = "";
+  if (deslocamentoGratis) {
+    observacaoDeslocamento = `Deslocamento grátis (até ${DESLOCAMENTO_GRATIS_KM}km)`;
+  } else {
+    observacaoDeslocamento = `Deslocamento acima de ${DESLOCAMENTO_GRATIS_KM}km — negociar à parte`;
+  }
+  
+  return {
+    basePacote,
+    drinksInclusos,
+    subtotalPorPessoa,
+    margem,
+    valorComMargem,
+    despesaMinima,
+    valorFinalPorPessoa,
+    totalEvento,
+    opcionais: {
+      pistolaFumaca,
+      valorPistolaFumaca,
+    },
+    deslocamento: {
+      km: distanciaKm,
+      gratis: deslocamentoGratis,
+      observacao: observacaoDeslocamento,
+    },
+    tempoMinimoHoras: p.segment.minHours,
+    prazoEntrega: PRAZO_ENTREGA_DIAS,
+  };
 }
 
 export function buildProposalMessage(p: {
