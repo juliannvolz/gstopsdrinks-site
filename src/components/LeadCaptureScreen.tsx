@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
-import { Label, Reveal, TextLink } from "./ui";
+import { Btn, Label, Reveal, TextLink } from "./ui";
 
 interface Props {
   onNext: (lead: { nome?: string; telefone: string }) => void;
@@ -83,26 +83,26 @@ export default function LeadCaptureScreen({ onNext, onBack }: Props) {
               <p className="text-[13px] text-[#e2412f] mt-2">{error}</p>
             )}
           </div>
+
+          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-5 justify-end md:justify-start">
+            <Btn
+              type="submit"
+              disabled={!telefoneValido}
+              className={`group relative inline-flex items-center gap-3 px-7 py-[17px] text-[12.5px] font-semibold uppercase tracking-[0.18em] transition-[transform,box-shadow,background-color,border-color,color] duration-200 outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-acc ${
+                telefoneValido
+                  ? "bg-acc text-onacc shadow-[-5px_5px_0_0_var(--acc2)] hover:-translate-x-[2px] hover:translate-y-[2px] hover:shadow-[-3px_3px_0_0_var(--acc2)]"
+                  : "cursor-not-allowed bg-fg/10 text-fg/35"
+              }`}
+            >
+              <ArrowRight className="h-4 w-4" />
+              <span>Ver minha comanda</span>
+            </Btn>
+            <TextLink onClick={onBack} back>
+              Voltar
+            </TextLink>
+          </div>
         </div>
       </form>
-
-      <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-5">
-        <button
-          type="submit"
-          disabled={!telefoneValido}
-          className={`group relative inline-flex items-center gap-3 px-7 py-[17px] text-[12.5px] font-semibold uppercase tracking-[0.18em] transition-[transform,box-shadow,background-color,border-color,color] duration-200 outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-acc ${
-            telefoneValido
-              ? "bg-acc text-onacc shadow-[-5px_5px_0_0_var(--acc2)] hover:-translate-x-[2px] hover:translate-y-[2px] hover:shadow-[-3px_3px_0_0_var(--acc2)]"
-              : "cursor-not-allowed bg-fg/10 text-fg/35"
-          }`}
-        >
-          <ArrowRight className="h-4 w-4" />
-          <span>Ver minha comanda</span>
-        </button>
-        <TextLink onClick={onBack} back>
-          Voltar
-        </TextLink>
-      </div>
     </section>
   );
 }
