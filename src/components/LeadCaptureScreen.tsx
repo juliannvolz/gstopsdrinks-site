@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Phone, User, ArrowRight } from "lucide-react";
-import { EASE, Btn, Label, Reveal, TextLink } from "./ui";
+import { ArrowRight } from "lucide-react";
+import { Label, Reveal, TextLink } from "./ui";
 
 interface Props {
   onNext: (lead: { nome?: string; telefone: string }) => void;
@@ -76,7 +75,7 @@ export default function LeadCaptureScreen({ onNext, onBack }: Props) {
                 value={telefone}
                 onChange={handleTelefoneChange}
                 placeholder="(47) 99999-9999"
-                maxLength="15"
+                maxLength={15}
                 className="w-full border border-fg/20 bg-fg/5 px-4 py-3 rounded-lg text-fg focus:outline-none focus:border-acc transition-colors"
               />
             </div>
@@ -88,9 +87,8 @@ export default function LeadCaptureScreen({ onNext, onBack }: Props) {
       </form>
 
       <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-5">
-        <Btn
-          type="button"
-          onClick={handleSubmit}
+        <button
+          type="submit"
           disabled={!telefoneValido}
           className={`group relative inline-flex items-center gap-3 px-7 py-[17px] text-[12.5px] font-semibold uppercase tracking-[0.18em] transition-[transform,box-shadow,background-color,border-color,color] duration-200 outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-acc ${
             telefoneValido
@@ -100,7 +98,7 @@ export default function LeadCaptureScreen({ onNext, onBack }: Props) {
         >
           <ArrowRight className="h-4 w-4" />
           <span>Ver minha comanda</span>
-        </Btn>
+        </button>
         <TextLink onClick={onBack} back>
           Voltar
         </TextLink>
