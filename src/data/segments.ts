@@ -35,6 +35,7 @@ export interface Segment {
   image: string;
   gallery: string[];
   theme: Theme;
+  minHours: number;
 }
 
 export const SEGMENTS: Record<SegmentId, Segment> = {
@@ -49,7 +50,6 @@ export const SEGMENTS: Record<SegmentId, Segment> = {
       "Do welcome drink ao último brinde da pista, cada taça carrega a assinatura de vocês. Serviço impecável, discreto e em perfeita sintonia com a decoração e o cerimonial.",
     includes: [
       { title: "Drink do casal", text: "Um coquetel autoral batizado com o nome de vocês." },
-      { title: "Welcome drink", text: "Servido à francesa na chegada dos convidados." },
       { title: "Menu impresso", text: "Carta personalizada, alinhada à papelaria do casamento." },
       { title: "Equipe cerimonial", text: "Bartenders em traje social, em sintonia com o cerimonial." },
     ],
@@ -70,6 +70,7 @@ export const SEGMENTS: Record<SegmentId, Segment> = {
       onAcc: "#fbf6ef",
       liquid: ["#f7e7c4", "#efbb92", "#d9774a"],
     },
+    minHours: 4,
   },
   debutante: {
     id: "debutante",
@@ -83,9 +84,7 @@ export const SEGMENTS: Record<SegmentId, Segment> = {
       "15 anos é energia pura. A GS monta um bar que vira atração: drinks coloridos, fotogênicos, reposição ágil e uma carta pensada para manter a pista cheia e o brinde sempre na mão.",
     includes: [
       { title: "Carta vibrante", text: "Drinks coloridos e fotogênicos, como o Paradise em camadas." },
-      { title: "Brinde das 15", text: "Um shot especial servido a todos na hora do parabéns." },
       { title: "Ritmo de pista", text: "Reposição ágil para a fila do bar nunca esfriar a festa." },
-      { title: "Atrações GS", text: "Show dos Tequileiros e performances que animam a noite." },
     ],
     image: "/gs/images/segments/segment-aniversario.jpg",
     gallery: [
@@ -104,6 +103,7 @@ export const SEGMENTS: Record<SegmentId, Segment> = {
       onAcc: "#0b0908",
       liquid: ["#2aa7ff", "#ffc21a", "#ff6a1f", "#d91e2a"],
     },
+    minHours: 4,
   },
   formatura: {
     id: "formatura",
@@ -137,6 +137,7 @@ export const SEGMENTS: Record<SegmentId, Segment> = {
       onAcc: "#0a0a0a",
       liquid: ["#fdb500", "#fe7802", "#e8341c"],
     },
+    minHours: 6,
   },
   corporativo: {
     id: "corporativo",
@@ -170,6 +171,7 @@ export const SEGMENTS: Record<SegmentId, Segment> = {
       onAcc: "#090b0b",
       liquid: ["#f7c766", "#e08b22", "#8a4312"],
     },
+    minHours: 4,
   },
   aniversario: {
     id: "aniversario",
@@ -183,9 +185,7 @@ export const SEGMENTS: Record<SegmentId, Segment> = {
       "Aniversário é energia do começo ao fim. A GS monta um bar que vira atração: drinks coloridos, reposição ágil e uma carta pensada para manter a pista cheia e o brinde sempre na mão.",
     includes: [
       { title: "Carta vibrante", text: "Drinks coloridos e fotogênicos, como o Paradise em camadas." },
-      { title: "Brinde do parabéns", text: "Um shot especial servido a todos na hora do bolo." },
       { title: "Ritmo de pista", text: "Reposição ágil para a fila do bar nunca esfriar a festa." },
-      { title: "Atrações GS", text: "Show dos Tequileiros e performances que animam a noite." },
     ],
     image: "/gs/images/segments/segment-aniversario.jpg",
     gallery: [
@@ -204,6 +204,7 @@ export const SEGMENTS: Record<SegmentId, Segment> = {
       onAcc: "#0b0908",
       liquid: ["#2aa7ff", "#ffc21a", "#ff6a1f", "#d91e2a"],
     },
+    minHours: 4,
   },
   festas: {
     id: "festas",
@@ -237,6 +238,7 @@ export const SEGMENTS: Record<SegmentId, Segment> = {
       onAcc: "#faf8f5",
       liquid: ["#f5e6cc", "#e8b87d", "#c47a2e"],
     },
+    minHours: 4,
   },
 };
 
