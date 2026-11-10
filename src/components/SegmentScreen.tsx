@@ -151,9 +151,7 @@ function Birthday({ segment, onNext, onBack }: Props) {
               <span className="absolute -left-8 top-8 -rotate-[8deg] bg-acc px-4 py-2.5 font-sans text-[12px] font-bold uppercase tracking-[0.16em] text-onacc shadow-[-4px_4px_0_0_var(--acc2)]">
                 Bar instagramável
               </span>
-              <span className="absolute -right-6 bottom-28 rotate-[7deg] bg-acc2 px-4 py-2.5 font-sans text-[12px] font-bold uppercase tracking-[0.16em] text-[#0b0908]">
-                Shot do parabéns
-              </span>
+              
             </motion.div>
           </div>
         </div>

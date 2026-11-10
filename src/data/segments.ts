@@ -47,7 +47,7 @@ export const SEGMENTS: Record<SegmentId, Segment> = {
     title: "Brindes à altura",
     highlight: "do seu sim.",
     copy:
-      "Do welcome drink ao último brinde da pista, cada taça carrega a assinatura de vocês. Serviço impecável, discreto e em perfeita sintonia com a decoração e o cerimonial.",
+      "Do primeiro ao último brinde da pista, cada taça carrega a assinatura de vocês. Serviço impecável, discreto e em perfeita sintonia com a decoração e o cerimonial.",
     includes: [
       { title: "Drink do casal", text: "Um coquetel autoral batizado com o nome de vocês." },
       { title: "Menu impresso", text: "Carta personalizada, alinhada à papelaria do casamento." },
