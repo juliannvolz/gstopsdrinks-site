@@ -4,7 +4,6 @@ import { GSMark, HurricaneGlass } from "./components/brand";
 import { EASE, IgIcon } from "./components/ui";
 import IntroScreen from "./components/IntroScreen";
 import QuizScreen from "./components/QuizScreen";
-import EssentialsScreen from "./components/quiz/EssentialsScreen";
 import SegmentScreen from "./components/SegmentScreen";
 import PackageScreen from "./components/PackageScreen";
 import LeadCaptureScreen from "./components/LeadCaptureScreen";
@@ -22,20 +21,17 @@ import {
 import { ThemeCtx } from "./theme";
 import { initGA, AnalyticsEvents } from "./utils/analytics";
 
-type Step = "intro" | "q0" | "q1" | "q2" | "q3" | "segment" | "package" | "lead" | "result";
+type Step = "intro" | "q0" | "segment" | "package" | "lead" | "result";
 
 const STEP_INDEX: Record<Step, number> = {
   intro: -1,
   q0: 0,
-  q1: 1,
-  q2: 2,
-  q3: 3,
-  segment: 4,
-  package: 5,
-  lead: 6,
-  result: 7,
+  segment: 1,
+  package: 2,
+  lead: 3,
+  result: 4,
 };
-const STEP_NAMES = ["Momento", "Convidados", "Estilo", "Essenciais", "Destino", "Pacote", "Contato", "Comanda"];
+const STEP_NAMES = ["Convidados", "Evento", "Pacote", "Contato", "Comanda"];
 
 const screen = {
   initial: { opacity: 0, y: 24 },
@@ -63,8 +59,6 @@ export default function App() {
   const [step, setStep] = useState<Step>("intro");
   const [segment, setSegment] = useState<SegmentId | null>(null);
   const [guestId, setGuestId] = useState<string | null>(null);
-  const [vibe, setVibe] = useState<PackageId | null>(null);
-  const [essentials, setEssentials] = useState<string[]>([]);
   const [packageId, setPackageId] = useState<PackageId>("bronze");
   const [selected, setSelected] = useState<string[]>([]);
   const [leadNome, setLeadNome] = useState<string>("");
@@ -84,14 +78,11 @@ export default function App() {
     if (step === "intro") return;
 
     const stepMap: Record<Step, { name: string; num: number }> = {
-      q0: { name: "momento", num: 1 },
-      q1: { name: "convidados", num: 2 },
-      q2: { name: "estilo", num: 3 },
-      q3: { name: "essenciais", num: 4 },
-      segment: { name: "destino", num: 5 },
-      package: { name: "pacote", num: 6 },
-      lead: { name: "contato", num: 7 },
-      result: { name: "comanda", num: 8 },
+      q0: { name: "convidados", num: 1 },
+      segment: { name: "evento", num: 2 },
+      package: { name: "pacote", num: 3 },
+      lead: { name: "contato", num: 4 },
+      result: { name: "comanda", num: 5 },
       intro: { name: "intro", num: 0 },
     };
 
@@ -143,15 +134,13 @@ export default function App() {
     setLeadNome("");
     setLeadTelefone("");
     AnalyticsEvents.packageSelect(p, segment ?? "unknown");
-    setStep("lead"); // PULA "drinks" → vai direto para "lead"
+    setStep("lead");
   };
 
   const restart = () => {
     AnalyticsEvents.quizRestart();
     setSegment(null);
     setGuestId(null);
-    setVibe(null);
-    setEssentials([]);
     setSelected([]);
     setLeadNome("");
     setLeadTelefone("");
@@ -203,42 +192,23 @@ export default function App() {
               </motion.div>
             )}
 
-            {(step === "q0" || step === "q1" || step === "q2") && (
-              <motion.div key={step} {...screen}>
+            {step === "q0" && (
+              <motion.div key="q0" {...screen}>
                 <QuizScreen
-                  question={step === "q0" ? 0 : step === "q1" ? 1 : 2}
-                  selected={step === "q0" ? segment ?? undefined : step === "q1" ? guestId ?? undefined : vibe ?? undefined}
-                  onBack={() => setStep(step === "q0" ? "intro" : step === "q1" ? "q0" : "q1")}
+                  question={0}
+                  selected={guestId ?? undefined}
+                  onBack={() => setStep("intro")}
                   onAnswer={(v) => {
-                    if (step === "q0") {
-                      setSegment(v as SegmentId);
-                      setStep("q1");
-                    } else if (step === "q1") {
-                      setGuestId(v);
-                      setStep("q2");
-                    } else {
-                      setVibe(v as PackageId);
-                      setStep("q3");
-                    }
+                    setGuestId(v);
+                    setStep("segment");
                   }}
-                />
-              </motion.div>
-            )}
-
-            {step === "q3" && segment && (
-              <motion.div key="essentials" {...screen}>
-                <EssentialsScreen
-                  selected={essentials}
-                  onChange={setEssentials}
-                  onNext={() => setStep("segment")}
-                  onBack={() => setStep("q2")}
                 />
               </motion.div>
             )}
 
             {step === "segment" && segment && (
               <motion.div key={`seg-${segment}`} {...screen}>
-                <SegmentScreen segment={SEGMENTS[segment]} onNext={() => setStep("package")} onBack={() => setStep("q3")} />
+                <SegmentScreen segment={SEGMENTS[segment]} onNext={() => setStep("package")} onBack={() => setStep("q0")} />
               </motion.div>
             )}
 
@@ -246,7 +216,7 @@ export default function App() {
               <motion.div key="package" {...screen}>
                 <PackageScreen
                   segment={segment}
-                  recommended={vibe ?? undefined}
+                  recommended={undefined}
                   onSelect={goPackage}
                   onBack={() => setStep("segment")}
                 />
