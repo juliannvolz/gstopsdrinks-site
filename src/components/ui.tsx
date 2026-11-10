@@ -18,6 +18,7 @@ interface BtnProps {
   arrow?: boolean;
   icon?: ReactNode;
   className?: string;
+  type?: "button" | "submit" | "reset";
 }
 
 /** Botão com sombra deslocada — o mesmo efeito de impressão do logo GS */
@@ -55,8 +56,9 @@ export function Btn({
         {inner}
       </a>
     );
+  const buttonType = type ?? "button";
   return (
-    <button type="button" onClick={disabled ? undefined : onClick} aria-disabled={disabled} className={cls}>
+    <button type={buttonType} onClick={disabled ? undefined : onClick} aria-disabled={disabled} className={cls}>
       {inner}
     </button>
   );
