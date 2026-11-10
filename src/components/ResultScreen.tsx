@@ -125,6 +125,7 @@ export default function ResultScreen({ segment, guests, packageId, selected, lea
         totalEvent,
         number,
         date,
+        pricing,
       });
     } catch (e) {
       console.error("PDF principal falhou, usando fallback", e);
@@ -138,6 +139,7 @@ export default function ResultScreen({ segment, guests, packageId, selected, lea
         totalEvent,
         number,
         date,
+        pricing,
       });
     }
   };

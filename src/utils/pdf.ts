@@ -6,7 +6,7 @@
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import { fmt } from "../data/drinks";
-import type { Segment, PackageId, Pkg, Drink, GuestsOption } from "../data/catalog";
+import type { Segment, PackageId, Pkg, Drink, GuestsOption, PricingBreakdown } from "../data/catalog";
 
 interface ComandaData {
   segment: Segment;
@@ -18,6 +18,7 @@ interface ComandaData {
   totalEvent: number;
   number: number;
   date: string;
+  pricing?: PricingBreakdown;
 }
 
 /**
@@ -25,7 +26,7 @@ interface ComandaData {
  * Funciona offline, sem dependência de servidor
  */
 export async function generateComandaPDF(data: ComandaData): Promise<void> {
-  const { segment, guests, pkg, selectedDrinks, perPerson, totalEvent, number, date } = data;
+  const { segment, guests, pkg, selectedDrinks, perPerson, totalEvent, number, date, pricing } = data;
 
   // Criar elemento temporário para renderizar
   const container = document.createElement("div");
@@ -40,6 +41,16 @@ export async function generateComandaPDF(data: ComandaData): Promise<void> {
   container.style.fontSize = "15px";
   container.style.lineHeight = "1.6";
   document.body.appendChild(container);
+
+  const basePacote = pricing?.basePacote ?? pkg.base;
+  const drinksInclusos = pricing?.drinksInclusos ?? selectedDrinks.reduce((acc, d) => acc + d.cost, 0);
+  const subtotalPorPessoa = pricing?.subtotalPorPessoa ?? (basePacote + drinksInclusos);
+  const margem = pricing?.margem ?? 0;
+  const valorComMargem = pricing?.valorComMargem ?? subtotalPorPessoa;
+  const valorFinalPorPessoa = pricing?.valorFinalPorPessoa ?? perPerson;
+  const tempoMinimo = pricing?.tempoMinimoHoras ?? 4;
+  const deslocamentoObs = pricing?.deslocamento?.observacao ?? "";
+  const prazoEntrega = pricing?.prazoEntrega ?? "até 4ª-feira";
 
   // HTML da comanda (estilo receipt térmico)
   container.innerHTML = `
@@ -69,10 +80,27 @@ export async function generateComandaPDF(data: ComandaData): Promise<void> {
       `).join("")}
       <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>Estrutura & equipe</span><span>${fmt.format(pkg.base)}</span></div>
     </div>
+    <hr style="border: none; border-top: 1px dashed rgba(27,20,16,0.35); margin: 16px 0;" />
+    <div style="margin-bottom: 16px;">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 13px; opacity: 0.7;">
+        <span>Subtotal / pessoa</span>
+        <span>${fmt.format(subtotalPorPessoa)}</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 13px; color: #e2412f;">
+        <span>+ Margem operacional (20%)</span>
+        <span>+${fmt.format(margem)}</span>
+      </div>
+      ${valorFinalPorPessoa > valorComMargem ? `
+      <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 13px; color: #e2412f;">
+        <span>+ Despesa mínima (30%)</span>
+        <span>→ ${fmt.format(valorFinalPorPessoa)}</span>
+      </div>
+      ` : ''}
+    </div>
     <hr style="border: none; border-top: 3px double rgba(27,20,16,0.35); margin: 16px 0;" />
     <div style="display: flex; justify-content: space-between; font-family: 'Jost', sans-serif; margin-bottom: 8px;">
       <span style="font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em;">Total / pessoa</span>
-      <span style="font-size: 1.75rem; font-weight: 800;">${fmt.format(perPerson)}</span>
+      <span style="font-size: 1.75rem; font-weight: 800;">${fmt.format(valorFinalPorPessoa)}</span>
     </div>
     <p style="text-align: right; font-size: 13px; opacity: 0.6; margin-bottom: 12px;">para cerca de ${guests.estimate} convidados</p>
     <div style="display: flex; justify-content: space-between; font-family: 'Jost', sans-serif;">
@@ -80,6 +108,11 @@ export async function generateComandaPDF(data: ComandaData): Promise<void> {
       <span style="font-size: 1.25rem; font-weight: 700;">≈ ${fmt.format(totalEvent)}</span>
     </div>
     <hr style="border: none; border-top: 1px dashed rgba(27,20,16,0.35); margin: 16px 0;" />
+    <div style="margin-bottom: 16px; font-size: 12px; opacity: 0.7;">
+      <div>Tempo mínimo: ${tempoMinimo}h</div>
+      ${deslocamentoObs ? `<div>${deslocamentoObs}</div>` : ''}
+      <div>Prazo de entrega: ${prazoEntrega}</div>
+    </div>
     <div style="background: repeating-linear-gradient(90deg, #1b1410 0 2px, transparent 2px 4px, #1b1410 4px 5px, transparent 5px 8px, #1b1410 8px 11px, transparent 11px 12px); height: 12px; margin: 16px 0;"></div>
     <p style="text-align: center; font-size: 13px;">obrigado pela preferência!</p>
     <p style="text-align: center; font-size: 13px; opacity: 0.6;">@gstopdrinks · gstopdrinks.com.br</p>
@@ -116,9 +149,19 @@ export async function generateComandaPDF(data: ComandaData): Promise<void> {
  * Gera PDF simples (sem html2canvas) para fallback
  */
 export function generateSimplePDF(data: ComandaData): void {
-  const { segment, guests, pkg, selectedDrinks, perPerson, totalEvent, number, date } = data;
+  const { segment, guests, pkg, selectedDrinks, perPerson, totalEvent, number, date, pricing } = data;
   const pdf = new jsPDF({ unit: "mm", format: "a4" });
   
+  const basePacote = pricing?.basePacote ?? pkg.base;
+  const drinksInclusos = pricing?.drinksInclusos ?? selectedDrinks.reduce((acc, d) => acc + d.cost, 0);
+  const subtotalPorPessoa = pricing?.subtotalPorPessoa ?? (basePacote + drinksInclusos);
+  const margem = pricing?.margem ?? 0;
+  const valorComMargem = pricing?.valorComMargem ?? subtotalPorPessoa;
+  const valorFinalPorPessoa = pricing?.valorFinalPorPessoa ?? perPerson;
+  const tempoMinimo = pricing?.tempoMinimoHoras ?? 4;
+  const deslocamentoObs = pricing?.deslocamento?.observacao ?? "";
+  const prazoEntrega = pricing?.prazoEntrega ?? "até 4ª-feira";
+
   let y = 20;
   const line = (text: string, size = 10, weight = "normal", align: "left" | "center" | "right" = "left") => {
     pdf.setFontSize(size);
@@ -140,8 +183,7 @@ export function generateSimplePDF(data: ComandaData): void {
   hr();
   line(`COMANDA Nº ${number}`, 10, "normal", "left");
   line(date, 10, "normal", "right");
-  y = 20; // reset y after header
-  // Actually let's do proper layout
+  y = 20;
   y = 50;
   
   line(`Evento: ${segment.name}`, 11);
@@ -154,11 +196,25 @@ export function generateSimplePDF(data: ComandaData): void {
   });
   line(`Estrutura & equipe .......................................... ${fmt.format(pkg.base)}`, 10);
   hr();
-  line(`Total / pessoa: ${fmt.format(perPerson)}`, 14, "bold");
+  
+  line(`Subtotal / pessoa: ${fmt.format(subtotalPorPessoa)}`, 10);
+  line(`+ Margem 20%: +${fmt.format(margem)}`, 10);
+  if (valorFinalPorPessoa > valorComMargem) {
+    line(`+ Despesa mínima 30%: → ${fmt.format(valorFinalPorPessoa)}`, 10);
+  }
+  hr();
+  
+  line(`Total / pessoa: ${fmt.format(valorFinalPorPessoa)}`, 14, "bold");
   line(`para cerca de ${guests.estimate} convidados`, 10, "normal", "right");
   y += 4;
   line(`Total estimado: ≈ ${fmt.format(totalEvent)}`, 16, "bold");
   hr();
+  
+  line(`Tempo mínimo: ${tempoMinimo}h`, 10);
+  if (deslocamentoObs) line(deslocamentoObs, 10);
+  line(`Prazo de entrega: ${prazoEntrega}`, 10);
+  hr();
+  
   line("obrigado pela preferência!", 11, "normal", "center");
   line("@gstopdrinks · gstopdrinks.com.br", 9, "normal", "center");
 
