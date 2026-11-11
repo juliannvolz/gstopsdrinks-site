@@ -188,23 +188,13 @@ export default function ResultScreen({ segment, guests, packageId, selected, lea
               <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-fg/55">Detalhamento do investimento</p>
               <div className="space-y-2 text-[14px] text-fg/75">
                 <InfoRow icon={Truck} label="Pacote base" value={fmt.format(pricing.basePacote)} />
-                <InfoRow icon={Truck} label="Drinks inclusos" value={fmt.format(pricing.drinksInclusos)} />
+                <InfoRow icon={Truck} label="Drinks inclusos" value="—" />
                 <InfoRow icon={Truck} label="Subtotal" value={fmt.format(pricing.subtotalPorPessoa)} />
                 <div className="flex items-center gap-3 text-[13px] text-fg/60 border-t border-fg/15 pt-2">
-                  <AlertCircle className="h-4 w-4 text-acc shrink-0" />
-                  <span>+ Margem operacional (20%)</span>
+                  <span>Despesa mínima e taxa de deslocamento a combinar via WhatsApp</span>
                   <span className="leader" />
-                  <span className="shrink-0 font-mono tabular-nums">{fmt.format(pricing.margem)}</span>
+                  <span className="shrink-0 font-mono tabular-nums">—</span>
                 </div>
-                <InfoRow icon={Truck} label="Valor com margem" value={fmt.format(pricing.valorComMargem)} />
-                {pricing.valorFinalPorPessoa > pricing.valorComMargem && (
-                  <div className="flex items-center gap-3 text-[13px] text-fg/60 border-t border-fg/15 pt-2">
-                    <AlertCircle className="h-4 w-4 text-acc shrink-0" />
-                    <span>Aplicada despesa mínima (30%)</span>
-                    <span className="leader" />
-                    <span className="shrink-0 font-mono tabular-nums">{fmt.format(pricing.valorFinalPorPessoa)}</span>
-                  </div>
-                )}
               </div>
             </div>
 
