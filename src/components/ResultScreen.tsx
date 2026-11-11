@@ -290,7 +290,7 @@ export default function ResultScreen({ segment, guests, packageId, selected, lea
               <Rule />
               <div className="flex items-baseline justify-between font-sans">
                 <span className="text-[13px] font-semibold uppercase tracking-[0.14em]">Total / pessoa</span>
-                <span className="text-2xl font-extrabold tabular-nums">{fmt.format(pricing.valorFinalPorPessoa)}</span>
+                <span className="text-2xl font-extrabold tabular-nums">{fmt.format(pricing.subtotalPorPessoa)}</span>
               </div>
               <p className="mt-1 text-right text-[13px] opacity-60">para cerca de {guests.estimate} convidados</p>
               <div className="mt-2 flex items-baseline justify-between font-sans">
