@@ -160,7 +160,7 @@ export default function ResultScreen({ segment, guests, packageId, selected, lea
             <div className="mt-10 border-t border-fg/15 pt-8">
               <p className="font-mono text-[13px] uppercase tracking-[0.14em] text-fg/55">Investimento por pessoa</p>
               <AnimatedMoney
-                value={pricing.valorFinalPorPessoa}
+                value={pricing.subtotalPorPessoa}
                 className="gs-offset mt-4 block font-sans text-[clamp(3.4rem,8.5vw,6.6rem)] font-extrabold leading-[0.9] tracking-[-0.045em] tabular-nums"
               />
               <p className="mt-6 inline-flex items-center border px-3 py-1.5 text-[12px] font-semibold uppercase tracking-[0.14em]" style={{ color: "var(--acc)", borderColor: "var(--acc)" }}>
