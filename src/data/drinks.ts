@@ -24,9 +24,9 @@ export const ALL_DRINKS: DrinkWithPackage[] = Object.values(PACKAGES)
 
 /** Drinks por pacote (para compatibilidade) */
 export const DRINKS_BY_PACKAGE: Record<PackageId, Drink[]> = {
-  bronze: PACKAGES.bronze.drinks,
-  prata: PACKAGES.prata.drinks,
-  ouro: PACKAGES.ouro.drinks,
+  classico: PACKAGES.classico.drinks,
+  intermediario: PACKAGES.intermediario.drinks,
+  dossonhos: PACKAGES.dossonhos.drinks,
 };
 
 /** Drinks por tier (para curadoria/sugestões) */

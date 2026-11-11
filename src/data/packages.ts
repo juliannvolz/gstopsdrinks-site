@@ -1,7 +1,7 @@
-/* GS TOP DRINKS — Pacotes & Preços (Ouro • Prata • Bronze) */
-/* Base: 25/29/41  |  Teto: +30%  |  Drinks inclusos no pacote (custo 0) */
+/* GS TOP DRINKS — Pacotes & Preços (Dos Sonhos • Intermediário • Clássico) */
+/* Base: 50/75/100  |  Teto: +30%  |  Drinks inclusos no pacote (custo 0) */
 
-export type PackageId = "bronze" | "prata" | "ouro";
+export type PackageId = "classico" | "intermediario" | "dossonhos";
 export type Tier = "economico" | "assinatura" | "premium";
 export type GlassType =
   | "rocks" | "highball" | "martini" | "coupe"
@@ -62,12 +62,12 @@ const d = (
 };
 
 export const PACKAGES: Record<PackageId, Package> = {
-  ouro: {
-    id: "ouro",
-    name: "Ouro",
-    tagline: "Experiência premium — destilados finos e assinaturas exclusivas",
-    base: 41,
-    ceiling: 53,
+  dossonhos: {
+    id: "dossonhos",
+    name: "Dos Sonhos",
+    tagline: "Experiência premium completa — destilados finos, assinaturas exclusivas e atrações",
+    base: 100,
+    ceiling: 130,
     bestSeller: true,
     image: "/gs/images/gallery/wedding.jpg",
     features: [
@@ -86,15 +86,15 @@ export const PACKAGES: Record<PackageId, Package> = {
       d("moscow-mule", "Moscow Mule", "Xarope de Gengibre, Água com gás, Suco de limão, Vodka opcional, Espuma chantilly, Raspa de limão", 0, ["picante", "cítrico"], "mug", "copper", { image: "/gs/images/drinks/moscow-mule.webp", spirit: "vodka" }),
     ],
   },
-  prata: {
-    id: "prata",
-    name: "Prata",
-    tagline: "Coquetéis autorais + clássicos refinados",
-    base: 29,
-    ceiling: 38,
+  intermediario: {
+    id: "intermediario",
+    name: "Intermediário",
+    tagline: "Coquetéis autorais + clássicos refinados com segundo bartender",
+    base: 75,
+    ceiling: 98,
     image: "/gs/images/segments/lineup.jpg",
     features: [
-      "Tudo do Bronze + 2º bartender",
+      "Tudo do Clássico + 2º bartender",
       "2 coquetéis autorais da casa",
       "Bar com identidade visual do evento",
       "Caipirinha da estação (fruta surpresa)",
@@ -105,17 +105,17 @@ export const PACKAGES: Record<PackageId, Package> = {
       d("cosmopolitan", "Cosmopolitan", "Xarope de Cranberry, Néctar de Cranberry, Licor de laranja, Vodka opcional", 0, ["frutado", "seco"], "martini", "#e5486c", { image: "/gs/images/drinks/COSMOPOLITAN.jpg", spirit: "vodka" }),
       d("mojito", "Mojito", "Bacardi carta Blanca opcional, Água com gás, Suco de limão, Açúcar opcional, Folhas de Hortelã", 0, ["refrescante", "herbal"], "highball", "#d3ecb4", { image: "/gs/images/drinks/MOJITO.jpg", spirit: "rum" }),
       d("pina-colada", "Piña Colada", "Néctar de Abacaxi, Leite condensado, Leite de côco, Vodka opcional", 0, ["frutado", "cremoso"], "hurricane", "#f5c679", { image: "/gs/images/drinks/PINACOLADA.jpg", spirit: "vodka" }),
-      d("caipi-morango-prata", "Caipirinha de Morango", "Vodka, Cachaça, Água com gás, Açúcar opcional", 0, ["frutado", "doce"], "rocks", "#e8484f", { image: "/gs/images/drinks/caipirinha-morango.webp", spirit: "vodka,cachaça" }),
-      d("caipi-maracuja-prata", "Caipirinha de Maracujá", "Cachaça, Vodka, Água com gás, Açúcar", 0, ["frutado", "cítrico"], "rocks", "#f2b134", { image: "/gs/images/drinks/caipirinha-maracuja-limao.webp", spirit: "cachaça,vodka" }),
-      d("moscow-mule-prata", "Moscow Mule", "Xarope de Gengibre, Água com gás, Suco de limão, Vodka opcional, Espuma chantilly, Raspa de limão", 0, ["picante", "cítrico"], "mug", "copper", { image: "/gs/images/drinks/moscow-mule.webp", spirit: "vodka" }),
+      d("caipi-morango-intermediario", "Caipirinha de Morango", "Vodka, Cachaça, Água com gás, Açúcar opcional", 0, ["frutado", "doce"], "rocks", "#e8484f", { image: "/gs/images/drinks/caipirinha-morango.webp", spirit: "vodka,cachaça" }),
+      d("caipi-maracuja-intermediario", "Caipirinha de Maracujá", "Cachaça, Vodka, Água com gás, Açúcar", 0, ["frutado", "cítrico"], "rocks", "#f2b134", { image: "/gs/images/drinks/caipirinha-maracuja-limao.webp", spirit: "cachaça,vodka" }),
+      d("moscow-mule-intermediario", "Moscow Mule", "Xarope de Gengibre, Água com gás, Suco de limão, Vodka opcional, Espuma chantilly, Raspa de limão", 0, ["picante", "cítrico"], "mug", "copper", { image: "/gs/images/drinks/moscow-mule.webp", spirit: "vodka" }),
     ],
   },
-  bronze: {
-    id: "bronze",
-    name: "Bronze",
-    tagline: "Os clássicos que todo mundo ama",
-    base: 25,
-    ceiling: 33,
+  classico: {
+    id: "classico",
+    name: "Clássico",
+    tagline: "Os clássicos que todo mundo ama — bar montado, insumos e equipe",
+    base: 50,
+    ceiling: 65,
     image: "/gs/images/segments/hero-main.jpg",
     features: [
       "Bar montado + 1 bartender GS",
@@ -134,7 +134,7 @@ export const PACKAGES: Record<PackageId, Package> = {
   },
 };
 
-export const PACKAGE_ORDER: PackageId[] = ["ouro", "prata", "bronze"];
+export const PACKAGE_ORDER: PackageId[] = ["dossonhos", "intermediario", "classico"];
 
 export const MIN_DRINKS = 4;
 export const MAX_DRINKS = 8;
@@ -165,7 +165,7 @@ export interface VibeOption {
 }
 
 export const VIBE_OPTIONS: VibeOption[] = [
-  { id: "ouro", label: "Uma experiência de show", sub: "Destilados premium e atrações", meta: "Pacote Ouro" },
-  { id: "prata", label: "Clássicos com autorais da casa", sub: "O equilíbrio entre o conhecido e a surpresa", meta: "Pacote Prata" },
-  { id: "bronze", label: "Os clássicos que todo mundo ama", sub: "Caipirinhas, mojito, gin tônica", meta: "Pacote Bronze" },
+  { id: "dossonhos", label: "Uma experiência completa", sub: "Destilados premium, atrações e carta exclusiva", meta: "Pacote Dos Sonhos" },
+  { id: "intermediario", label: "Clássicos com autorais da casa", sub: "O equilíbrio entre o conhecido e a surpresa", meta: "Pacote Intermediário" },
+  { id: "classico", label: "Os clássicos que todo mundo ama", sub: "Caipirinhas, drinks refrescantes e sem álcool", meta: "Pacote Clássico" },
 ];

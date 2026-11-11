@@ -13,7 +13,6 @@ import {
   buildProposalMessage,
   calculatePricing,
   fmt,
-  fmtNum,
   totalPerPerson,
   waLink,
   type GuestsOption,
@@ -295,25 +294,9 @@ export default function ResultScreen({ segment, guests, packageId, selected, lea
               <Rule />
               <div className="space-y-1">
                 {drinks.map((x) => (
-                  <Row key={x.id} l={x.name} r={fmtNum.format(x.cost)} />
+                  <Row key={x.id} l={x.name} r="" />
                 ))}
-                <Row l="Estrutura & equipe" r={fmtNum.format(pkg.base)} />
               </div>
-              <Rule double />
-              <div className="flex items-baseline justify-between font-sans">
-                <span className="text-[13px] font-semibold uppercase tracking-[0.14em]">Subtotal / pessoa</span>
-                <span className="text-2xl font-extrabold tabular-nums">{fmt.format(pricing.subtotalPorPessoa)}</span>
-              </div>
-              <div className="flex items-baseline justify-between font-sans text-[13px] text-fg/60">
-                <span>+ Margem 20%</span>
-                <span className="tabular-nums">+{fmt.format(pricing.margem)}</span>
-              </div>
-              {pricing.valorFinalPorPessoa > pricing.valorComMargem && (
-                <div className="flex items-baseline justify-between font-sans text-[13px] text-acc">
-                  <span>+ Despesa mínima 30%</span>
-                  <span className="tabular-nums">→ {fmt.format(pricing.valorFinalPorPessoa)}</span>
-                </div>
-              )}
               <Rule />
               <div className="flex items-baseline justify-between font-sans">
                 <span className="text-[13px] font-semibold uppercase tracking-[0.14em]">Total / pessoa</span>
@@ -324,6 +307,15 @@ export default function ResultScreen({ segment, guests, packageId, selected, lea
                 <span className="text-[13px] font-semibold uppercase tracking-[0.14em]">Total estimado</span>
                 <span className="text-xl font-bold tabular-nums">≈ {fmt.format(totalEvent)}</span>
               </div>
+              {pricing.opcionais.pistolaFumaca && (
+                <>
+                  <Rule />
+                  <div className="flex items-baseline justify-between font-sans text-[13px] text-acc bg-acc/10 px-3 py-2 rounded-lg">
+                    <span>🔥 Pistola de fumaça (opcional)</span>
+                    <span className="tabular-nums font-bold">{fmt.format(pricing.opcionais.valorPistolaFumaca)}</span>
+                  </div>
+                </>
+              )}
               <Rule />
               <div
                 className="mx-auto h-12 w-4/5"
@@ -331,10 +323,15 @@ export default function ResultScreen({ segment, guests, packageId, selected, lea
                   background: `repeating-linear-gradient(90deg, ${INK} 0 2px, transparent 2px 4px, ${INK} 4px 5px, transparent 5px 8px, ${INK} 8px 11px, transparent 11px 12px)`,
                 }}
               />
-              <p className="mt-4 text-center text-[11px] leading-relaxed opacity-70">
-                <strong>Importante:</strong> Os valores acima são uma <strong>simulação aproximada</strong>. O investimento final é <strong>personalizado com o consultor</strong> no WhatsApp — entre em contato para fechar seu orçamento real e garantir a melhor proposta.
-              </p>
-              <p className="mt-2 text-center text-[13px]">obrigado pela preferência!</p>
+              <div className="mt-4 p-4 bg-acc/10 border border-acc/30 rounded-lg">
+                <p className="text-center text-[12px] leading-relaxed text-acc font-semibold">
+                  Valor estipulado para simulação — a proposta final é personalizada com seu consultor <strong>GS Top Drinks</strong>.
+                </p>
+                <p className="mt-1 text-center text-[11px] leading-relaxed opacity-70">
+                  Entre em contato pelo WhatsApp para fechar seu orçamento real.
+                </p>
+              </div>
+              <p className="mt-4 text-center text-[13px]">obrigado pela preferência!</p>
               <p className="text-center text-[13px] opacity-60">{CONTACT.handle} · gstopdrinks.com.br</p>
             </div>
           </motion.div>

@@ -59,7 +59,7 @@ export default function App() {
   const [step, setStep] = useState<Step>("intro");
   const [segment, setSegment] = useState<SegmentId | null>(null);
   const [guestId, setGuestId] = useState<string | null>(null);
-  const [packageId, setPackageId] = useState<PackageId>("bronze");
+  const [packageId, setPackageId] = useState<PackageId>("classico");
   const [selected, setSelected] = useState<string[]>([]);
   const [leadNome, setLeadNome] = useState<string>("");
   const [leadTelefone, setLeadTelefone] = useState<string>("");

@@ -42,17 +42,14 @@ export async function generateComandaPDF(data: ComandaData): Promise<void> {
   container.style.lineHeight = "1.6";
   document.body.appendChild(container);
 
-  const basePacote = pricing?.basePacote ?? pkg.base;
-  const drinksInclusos = pricing?.drinksInclusos ?? selectedDrinks.reduce((acc, d) => acc + d.cost, 0);
-  const subtotalPorPessoa = pricing?.subtotalPorPessoa ?? (basePacote + drinksInclusos);
-  const margem = pricing?.margem ?? 0;
-  const valorComMargem = pricing?.valorComMargem ?? subtotalPorPessoa;
   const valorFinalPorPessoa = pricing?.valorFinalPorPessoa ?? perPerson;
   const tempoMinimo = pricing?.tempoMinimoHoras ?? 4;
   const deslocamentoObs = pricing?.deslocamento?.observacao ?? "";
   const prazoEntrega = pricing?.prazoEntrega ?? "até 4ª-feira";
+  const pistolaFumaca = pricing?.opcionais?.pistolaFumaca ?? false;
+  const valorPistolaFumaca = pricing?.opcionais?.valorPistolaFumaca ?? 0;
 
-  // HTML da comanda (estilo receipt térmico)
+  // HTML da comanda (estilo receipt térmico) - SIMPLIFICADA
   container.innerHTML = `
     <div style="text-align: center; margin-bottom: 24px;">
       <div style="font-size: 3.2rem; font-weight: 800; letter-spacing: -0.06em; font-family: 'Jost', sans-serif;">GS</div>
@@ -75,29 +72,11 @@ export async function generateComandaPDF(data: ComandaData): Promise<void> {
       ${selectedDrinks.map((d) => `
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
           <span>${d.name}</span>
-          <span>${fmt.format(d.cost)}</span>
+          <span></span>
         </div>
       `).join("")}
-      <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>Estrutura & equipe</span><span>${fmt.format(pkg.base)}</span></div>
     </div>
     <hr style="border: none; border-top: 1px dashed rgba(27,20,16,0.35); margin: 16px 0;" />
-    <div style="margin-bottom: 16px;">
-      <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 13px; opacity: 0.7;">
-        <span>Subtotal / pessoa</span>
-        <span>${fmt.format(subtotalPorPessoa)}</span>
-      </div>
-      <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 13px; color: #e2412f;">
-        <span>+ Margem operacional (20%)</span>
-        <span>+${fmt.format(margem)}</span>
-      </div>
-      ${valorFinalPorPessoa > valorComMargem ? `
-      <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 13px; color: #e2412f;">
-        <span>+ Despesa mínima (30%)</span>
-        <span>→ ${fmt.format(valorFinalPorPessoa)}</span>
-      </div>
-      ` : ''}
-    </div>
-    <hr style="border: none; border-top: 3px double rgba(27,20,16,0.35); margin: 16px 0;" />
     <div style="display: flex; justify-content: space-between; font-family: 'Jost', sans-serif; margin-bottom: 8px;">
       <span style="font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em;">Total / pessoa</span>
       <span style="font-size: 1.75rem; font-weight: 800;">${fmt.format(valorFinalPorPessoa)}</span>
@@ -107,6 +86,13 @@ export async function generateComandaPDF(data: ComandaData): Promise<void> {
       <span style="font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em;">Total estimado</span>
       <span style="font-size: 1.25rem; font-weight: 700;">≈ ${fmt.format(totalEvent)}</span>
     </div>
+    ${pistolaFumaca ? `
+    <hr style="border: none; border-top: 1px dashed rgba(27,20,16,0.35); margin: 16px 0;" />
+    <div style="display: flex; justify-content: space-between; font-size: 13px; color: #e2412f; background: #fee; padding: 8px; border-radius: 8px;">
+      <span>🔥 Pistola de fumaça (opcional)</span>
+      <span style="font-weight: bold;">${fmt.format(valorPistolaFumaca)}</span>
+    </div>
+    ` : ''}
     <hr style="border: none; border-top: 1px dashed rgba(27,20,16,0.35); margin: 16px 0;" />
     <div style="margin-bottom: 16px; font-size: 12px; opacity: 0.7;">
       <div>Tempo mínimo: ${tempoMinimo}h</div>
@@ -114,6 +100,14 @@ export async function generateComandaPDF(data: ComandaData): Promise<void> {
       <div>Prazo de entrega: ${prazoEntrega}</div>
     </div>
     <div style="background: repeating-linear-gradient(90deg, #1b1410 0 2px, transparent 2px 4px, #1b1410 4px 5px, transparent 5px 8px, #1b1410 8px 11px, transparent 11px 12px); height: 12px; margin: 16px 0;"></div>
+    <div style="background: #fff3e0; border: 1px solid #ffb74d; border-radius: 8px; padding: 12px; margin-bottom: 16px;">
+      <p style="text-align: center; font-size: 12px; color: #e65100; font-weight: 600; margin: 0;">
+        Valor estipulado para simulação — a proposta final é personalizada com seu consultor <strong>GS Top Drinks</strong>.
+      </p>
+      <p style="text-align: center; font-size: 11px; color: #bf360c; margin: 4px 0 0 0;">
+        Entre em contato pelo WhatsApp para fechar seu orçamento real.
+      </p>
+    </div>
     <p style="text-align: center; font-size: 13px;">obrigado pela preferência!</p>
     <p style="text-align: center; font-size: 13px; opacity: 0.6;">@gstopdrinks · gstopdrinks.com.br</p>
   `;
@@ -152,15 +146,12 @@ export function generateSimplePDF(data: ComandaData): void {
   const { segment, guests, pkg, selectedDrinks, perPerson, totalEvent, number, date, pricing } = data;
   const pdf = new jsPDF({ unit: "mm", format: "a4" });
   
-  const basePacote = pricing?.basePacote ?? pkg.base;
-  const drinksInclusos = pricing?.drinksInclusos ?? selectedDrinks.reduce((acc, d) => acc + d.cost, 0);
-  const subtotalPorPessoa = pricing?.subtotalPorPessoa ?? (basePacote + drinksInclusos);
-  const margem = pricing?.margem ?? 0;
-  const valorComMargem = pricing?.valorComMargem ?? subtotalPorPessoa;
   const valorFinalPorPessoa = pricing?.valorFinalPorPessoa ?? perPerson;
   const tempoMinimo = pricing?.tempoMinimoHoras ?? 4;
   const deslocamentoObs = pricing?.deslocamento?.observacao ?? "";
   const prazoEntrega = pricing?.prazoEntrega ?? "até 4ª-feira";
+  const pistolaFumaca = pricing?.opcionais?.pistolaFumaca ?? false;
+  const valorPistolaFumaca = pricing?.opcionais?.valorPistolaFumaca ?? 0;
 
   let y = 20;
   const line = (text: string, size = 10, weight = "normal", align: "left" | "center" | "right" = "left") => {
@@ -192,22 +183,20 @@ export function generateSimplePDF(data: ComandaData): void {
   hr();
   
   selectedDrinks.forEach((d) => {
-    line(`${d.name} .......................................... ${fmt.format(d.cost)}`, 10);
+    line(`${d.name}`, 10);
   });
-  line(`Estrutura & equipe .......................................... ${fmt.format(pkg.base)}`, 10);
-  hr();
-  
-  line(`Subtotal / pessoa: ${fmt.format(subtotalPorPessoa)}`, 10);
-  line(`+ Margem 20%: +${fmt.format(margem)}`, 10);
-  if (valorFinalPorPessoa > valorComMargem) {
-    line(`+ Despesa mínima 30%: → ${fmt.format(valorFinalPorPessoa)}`, 10);
-  }
   hr();
   
   line(`Total / pessoa: ${fmt.format(valorFinalPorPessoa)}`, 14, "bold");
   line(`para cerca de ${guests.estimate} convidados`, 10, "normal", "right");
   y += 4;
   line(`Total estimado: ≈ ${fmt.format(totalEvent)}`, 16, "bold");
+  
+  if (pistolaFumaca) {
+    hr();
+    line(`🔥 Pistola de fumaça (opcional): ${fmt.format(valorPistolaFumaca)}`, 10, "bold");
+  }
+  
   hr();
   
   line(`Tempo mínimo: ${tempoMinimo}h`, 10);
@@ -215,7 +204,21 @@ export function generateSimplePDF(data: ComandaData): void {
   line(`Prazo de entrega: ${prazoEntrega}`, 10);
   hr();
   
-  line("obrigado pela preferência!", 11, "normal", "center");
+  // Mensagem do consultor
+  pdf.setFontSize(9);
+  pdf.setFont("helvetica", "normal");
+  pdf.setTextColor(230, 81, 0);
+  const msg1 = "Valor estipulado para simulacao - a proposta final e personalizada com seu consultor GS Top Drinks.";
+  const msg2 = "Entre em contato pelo WhatsApp para fechar seu orcamento real.";
+  const splitMsg1 = pdf.splitTextToSize(msg1, 180);
+  const splitMsg2 = pdf.splitTextToSize(msg2, 180);
+  pdf.text(splitMsg1, 105, y, { align: "center" });
+  y += splitMsg1.length * 4.5;
+  pdf.text(splitMsg2, 105, y, { align: "center" });
+  y += splitMsg2.length * 4.5 + 4;
+  pdf.setTextColor(0, 0, 0);
+  
+  line("obrigado pela preferencia!", 11, "normal", "center");
   line("@gstopdrinks · gstopdrinks.com.br", 9, "normal", "center");
 
   pdf.save(`comanda-gs-top-drinks-${number}.pdf`);
